@@ -5,13 +5,15 @@ import "./MINStructs.sol";
 
 import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
+import "@openzeppelin/contracts/utils/ReentrancyGuard.sol";
 
 /**
  * @title MINVesting
  * @dev This contract handles the vesting schedule for the MIN token.
  */
-contract MINVesting is Ownable {
+contract MINVesting is Ownable, ReentrancyGuard {
     using MINStructs for MINStructs.VestingSchedule;
+    using MINStructs for MINStructs.Transfer;
 
     // Mapping of beneficiary addresses to their vesting schedules
     mapping(address => MINStructs.VestingSchedule) private _vestingSchedules;
@@ -44,22 +46,40 @@ contract MINVesting is Ownable {
      */
     function setUpVestingSchedules(
         MINStructs.VestingSchedule[] memory vestingSchedules
-    ) public onlyOwner {
+    ) public onlyOwner nonReentrant {
         uint256 requiredTotalAmount = 0;
         for (uint256 i = 0; i < vestingSchedules.length; i++) {
-            uint256 tgePermille = vestingSchedules[i].tgePermille;
-            uint256 totalAmount = vestingSchedules[i].totalAmount;
-            uint256 tgeAmount = (totalAmount * tgePermille) / 1000;
-            uint256 vestingAmount = totalAmount - tgeAmount;
-            requiredTotalAmount += vestingAmount;
+            requiredTotalAmount += vestingSchedules[i].totalAmount;
         }
         require(
             _token.balanceOf(address(this)) >= requiredTotalAmount,
             "MINVesting: insufficient balance for vesting schedules"
         );
+
+        // An array to hold the transfers to be made
+
+        MINStructs.Transfer[] memory transfers = new MINStructs.Transfer[](
+            vestingSchedules.length
+        );
+
         for (uint256 i = 0; i < vestingSchedules.length; i++) {
             MINStructs.VestingSchedule memory vestingSchedule = vestingSchedules[i];
             _vestingSchedules[vestingSchedule.beneficiary] = vestingSchedule;
+            if (vestingSchedule.tgePermille > 0) {
+                uint256 tgeAmount = (vestingSchedule.totalAmount * vestingSchedule.tgePermille) /
+                    1000;
+                _vestingSchedules[vestingSchedule.beneficiary].releasedAmount += tgeAmount;
+
+                // Store the transfer to be made
+                transfers[i] = MINStructs.Transfer(vestingSchedule.beneficiary, tgeAmount);
+            }
+        }
+
+        // Make the transfers after all state changes
+        for (uint256 i = 0; i < transfers.length; i++) {
+            if (transfers[i].amount > 0) {
+                SafeERC20.safeTransfer(_token, transfers[i].to, transfers[i].amount);
+            }
         }
     }
 
@@ -78,7 +98,7 @@ contract MINVesting is Ownable {
      * @dev Releases the vested tokens to the beneficiary.
      * @param amount The amount of tokens to release.
      */
-    function release(uint256 amount) public onlyBeneficiary {
+    function release(uint256 amount) public onlyBeneficiary nonReentrant {
         uint256 releasableAmount = computeReleasableAmount(msg.sender);
         require(releasableAmount > 0, "MINVesting: no tokens are due");
         require(releasableAmount >= amount, "MINVesting: amount exceeds releasable amount");
