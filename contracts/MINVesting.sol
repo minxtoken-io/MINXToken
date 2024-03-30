@@ -11,7 +11,7 @@ import "@openzeppelin/contracts/utils/ReentrancyGuard.sol";
  * @title MINVesting
  * @dev This contract handles the vesting schedule for the MIN token.
  */
-contract MINVesting is Ownable, ReentrancyGuard {
+contract MINVesting is Ownable {
     using MINStructs for MINStructs.VestingSchedule;
     using MINStructs for MINStructs.Transfer;
 
@@ -46,7 +46,7 @@ contract MINVesting is Ownable, ReentrancyGuard {
      */
     function setUpVestingSchedules(
         MINStructs.VestingSchedule[] memory vestingSchedules
-    ) public onlyOwner nonReentrant {
+    ) public onlyOwner {
         uint256 requiredTotalAmount = 0;
         for (uint256 i = 0; i < vestingSchedules.length; i++) {
             requiredTotalAmount += vestingSchedules[i].totalAmount;
@@ -68,7 +68,7 @@ contract MINVesting is Ownable, ReentrancyGuard {
             if (vestingSchedule.tgePermille > 0) {
                 uint256 tgeAmount = (vestingSchedule.totalAmount * vestingSchedule.tgePermille) /
                     1000;
-                _vestingSchedules[vestingSchedule.beneficiary].releasedAmount += tgeAmount;
+                _vestingSchedules[vestingSchedule.beneficiary].totalAmount -= tgeAmount;
 
                 // Store the transfer to be made
                 transfers[i] = MINStructs.Transfer(vestingSchedule.beneficiary, tgeAmount);
@@ -98,7 +98,7 @@ contract MINVesting is Ownable, ReentrancyGuard {
      * @dev Releases the vested tokens to the beneficiary.
      * @param amount The amount of tokens to release.
      */
-    function release(uint256 amount) public onlyBeneficiary nonReentrant {
+    function release(uint256 amount) public onlyBeneficiary {
         uint256 releasableAmount = computeReleasableAmount(msg.sender);
         require(releasableAmount > 0, "MINVesting: no tokens are due");
         require(releasableAmount >= amount, "MINVesting: amount exceeds releasable amount");
