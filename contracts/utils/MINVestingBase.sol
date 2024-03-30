@@ -8,10 +8,10 @@ import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/utils/ReentrancyGuard.sol";
 
 /**
- * @title MINVesting
+ * @title MINVestingBase
  * @dev This contract handles the vesting schedule for the MIN token.
  */
-contract MINVesting is Ownable {
+abstract contract MINVestingBase is Ownable {
     using MINStructs for MINStructs.VestingSchedule;
     using MINStructs for MINStructs.Transfer;
 
@@ -38,49 +38,6 @@ contract MINVesting is Ownable {
             "MINVesting: caller is not a beneficiary"
         );
         _;
-    }
-
-    /**
-     * @dev Sets up the vesting schedules for the beneficiaries.
-     * @param vestingSchedules The vesting schedules for the beneficiaries.
-     */
-    function setUpVestingSchedules(
-        MINStructs.VestingSchedule[] memory vestingSchedules
-    ) public onlyOwner {
-        uint256 requiredTotalAmount = 0;
-        for (uint256 i = 0; i < vestingSchedules.length; i++) {
-            requiredTotalAmount += vestingSchedules[i].totalAmount;
-        }
-        require(
-            _token.balanceOf(address(this)) >= requiredTotalAmount,
-            "MINVesting: insufficient balance for vesting schedules"
-        );
-
-        // An array to hold the transfers to be made
-
-        MINStructs.Transfer[] memory transfers = new MINStructs.Transfer[](
-            vestingSchedules.length
-        );
-
-        for (uint256 i = 0; i < vestingSchedules.length; i++) {
-            MINStructs.VestingSchedule memory vestingSchedule = vestingSchedules[i];
-            _vestingSchedules[vestingSchedule.beneficiary] = vestingSchedule;
-            if (vestingSchedule.tgePermille > 0) {
-                uint256 tgeAmount = (vestingSchedule.totalAmount * vestingSchedule.tgePermille) /
-                    1000;
-                _vestingSchedules[vestingSchedule.beneficiary].totalAmount -= tgeAmount;
-
-                // Store the transfer to be made
-                transfers[i] = MINStructs.Transfer(vestingSchedule.beneficiary, tgeAmount);
-            }
-        }
-
-        // Make the transfers after all state changes
-        for (uint256 i = 0; i < transfers.length; i++) {
-            if (transfers[i].amount > 0) {
-                SafeERC20.safeTransfer(_token, transfers[i].to, transfers[i].amount);
-            }
-        }
     }
 
     /**
@@ -146,5 +103,24 @@ contract MINVesting is Ownable {
      */
     function getCurrentTime() internal view virtual returns (uint256) {
         return block.timestamp;
+    }
+
+    /**
+     * @dev Returns the MIN token.
+     * @return The MIN token.
+     */
+
+    function getToken() public view returns (IERC20) {
+        return _token;
+    }
+
+    function setVestingSchedule(MINStructs.VestingSchedule memory vestingSchedule) internal {
+        _vestingSchedules[vestingSchedule.beneficiary] = vestingSchedule;
+    }
+
+    function getVestingSchedule(
+        address beneficiary
+    ) internal view returns (MINStructs.VestingSchedule memory) {
+        return _vestingSchedules[beneficiary];
     }
 }
