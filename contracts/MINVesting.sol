@@ -109,6 +109,7 @@ contract MINVesting is Ownable {
             uint256 timeFromStart = currentTime -
                 (vestingSchedule.startTimestamp + vestingSchedule.cliffDuration);
             uint256 secondsPerSlice = vestingSchedule.slicePeriodSeconds;
+            // Division before multiplication is intentional to floor the result.
             uint256 vestedSlicePeriods = timeFromStart / secondsPerSlice;
             uint256 vestedSeconds = vestedSlicePeriods * secondsPerSlice;
             // Compute the amount of tokens that are vested.
