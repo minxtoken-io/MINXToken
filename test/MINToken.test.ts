@@ -2,7 +2,7 @@ import {time, loadFixture} from '@nomicfoundation/hardhat-toolbox/network-helper
 import {anyValue} from '@nomicfoundation/hardhat-chai-matchers/withArgs';
 import {expect} from 'chai';
 import {ethers} from 'hardhat';
-import {MINToken, MINToken__factory} from '../typechain-types';
+import {MINToken, MINToken__factory} from '../typechain';
 import {SignerWithAddress} from '@nomicfoundation/hardhat-ethers/signers';
 
 let deployer: SignerWithAddress;
