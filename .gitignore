@@ -15,3 +15,5 @@ node_modules
 
 # hardhat-ignite deployment files
 /ignition/deployments
+.vscode/slither-results.json
+.vscode/settings.json
