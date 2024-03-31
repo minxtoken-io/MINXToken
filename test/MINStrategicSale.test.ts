@@ -1,7 +1,7 @@
 import {time, loadFixture} from '@nomicfoundation/hardhat-toolbox/network-helpers';
 import {anyValue} from '@nomicfoundation/hardhat-chai-matchers/withArgs';
 import {expect} from 'chai';
-import {ethers} from 'hardhat';
+import {ethers, network} from 'hardhat';
 import {MINToken, MINToken__factory, MINStrategicSale, MINStrategicSale__factory} from '../typechain';
 import {SignerWithAddress} from '@nomicfoundation/hardhat-ethers/signers';
 import {VESTING_SCHEDULES} from '../tokenomics/tokenomics';
@@ -12,10 +12,16 @@ let minStrategicSale: MINStrategicSale;
 const AMOUNT = 300_000_000;
 const DECIMALS = 18;
 describe('MINStrategicSale', function () {
-  // should be able to deploy
+  this.beforeAll(async function () {
+    await network.provider.request({
+      method: 'hardhat_reset',
+      params: [],
+    });
+  });
   beforeEach('should be deployed', async function () {
     deployer = await ethers.provider.getSigner(0);
     anyone = await ethers.provider.getSigner(1);
+
     min = await new MINToken__factory(deployer).deploy(BigInt(AMOUNT));
     const schedule = VESTING_SCHEDULES.strategic;
     minStrategicSale = await new MINStrategicSale__factory(deployer).deploy(min, {

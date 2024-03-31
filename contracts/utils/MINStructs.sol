@@ -27,14 +27,4 @@ library MINStructs {
         uint256 totalAmount;
         uint256 releasedAmount;
     }
-
-    /**
-     * @dev Struct to represent a transfer of MIN tokens.
-     * @param to The address to transfer tokens to.
-     * @param amount The amount of tokens to transfer.
-     */
-    struct Transfer {
-        address to;
-        uint256 amount;
-    }
 }

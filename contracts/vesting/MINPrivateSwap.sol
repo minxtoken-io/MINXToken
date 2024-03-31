@@ -22,7 +22,7 @@ contract MINPrivateSwap is MINVestingBase {
     MINStructs.VestingSchedule private _privateSaleVestingSchedule;
 
     constructor(
-        IERC20 minToken,
+        MINToken minToken,
         IERC20 swapToken,
         uint256 ratioMinToSwap,
         uint256 maxMinToken,
@@ -38,8 +38,7 @@ contract MINPrivateSwap is MINVestingBase {
 
     function deposit(uint256 amount) public onlyBeforeSaleEnd {
         require(
-            (((_swapToken.balanceOf(address(this)) + amount) * 100) / _ratioMinToSwap) <=
-                _maxMinToken,
+            (((_swapToken.balanceOf(address(this)) + amount) * 100) / _ratioMinToSwap) <= _maxMinToken,
             "MINPrivateSwap: not enough MIN tokens to buy for the swap tokens"
         );
         require(amount > 0, "MINPrivateSwap: amount must be greater than 0");
@@ -61,8 +60,7 @@ contract MINPrivateSwap is MINVestingBase {
     function withdrawSwapToken(uint256 amount) public onlyOwner onlyAfterSaleEnd {
         require(amount <= _swapToken.balanceOf(address(this)), "Insufficient balance");
         require(
-            (_swapToken.balanceOf(address(this)) * 100) / _ratioMinToSwap <=
-                getToken().balanceOf(address(this)),
+            (_swapToken.balanceOf(address(this)) * 100) / _ratioMinToSwap <= getToken().balanceOf(address(this)),
             "Can't withdraw swap tokens before sufficient MIN tokens are deposited"
         );
         _transformSwapBalancesToVestingSchedules();

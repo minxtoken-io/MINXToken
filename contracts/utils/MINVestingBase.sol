@@ -2,8 +2,7 @@
 pragma solidity 0.8.20;
 
 import "./MINStructs.sol";
-
-import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
+import "../token/MINToken.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/utils/ReentrancyGuard.sol";
 
@@ -13,19 +12,18 @@ import "@openzeppelin/contracts/utils/ReentrancyGuard.sol";
  */
 abstract contract MINVestingBase is Ownable {
     using MINStructs for MINStructs.VestingSchedule;
-    using MINStructs for MINStructs.Transfer;
 
     // Mapping of beneficiary addresses to their vesting schedules
     mapping(address => MINStructs.VestingSchedule) private _vestingSchedules;
 
     // The MIN token
-    IERC20 private immutable _token;
+    MINToken private immutable _token;
 
     /**
      * @dev Sets the MIN token and the owner of the contract.
      * @param token The MIN token.
      */
-    constructor(IERC20 token) Ownable(msg.sender) {
+    constructor(MINToken token) Ownable(msg.sender) {
         _token = token;
     }
 
@@ -33,10 +31,7 @@ abstract contract MINVestingBase is Ownable {
      * @dev Modifier to make a function callable only by beneficiaries.
      */
     modifier onlyBeneficiary() {
-        require(
-            _vestingSchedules[msg.sender].beneficiary == msg.sender,
-            "MINVesting: caller is not a beneficiary"
-        );
+        require(_vestingSchedules[msg.sender].beneficiary == msg.sender, "MINVesting: caller is not a beneficiary");
         _;
     }
 
@@ -62,7 +57,7 @@ abstract contract MINVestingBase is Ownable {
         MINStructs.VestingSchedule storage vestingSchedule = _vestingSchedules[msg.sender];
         vestingSchedule.releasedAmount += amount;
 
-        SafeERC20.safeTransfer(_token, msg.sender, amount);
+        _token.transfer(msg.sender, amount);
     }
 
     /**
@@ -71,34 +66,36 @@ abstract contract MINVestingBase is Ownable {
      * @return The amount of tokens that can be released.
      */
     function computeReleasableAmount(address beneficiary) public view virtual returns (uint256) {
-        require(
-            _vestingSchedules[beneficiary].beneficiary == beneficiary,
-            "MINVesting: beneficiary not found"
-        );
+        require(_vestingSchedules[beneficiary].beneficiary == beneficiary, "MINVesting: beneficiary not found");
         MINStructs.VestingSchedule storage vestingSchedule = _vestingSchedules[beneficiary];
         uint256 currentTime = getCurrentTime();
+        uint256 releasable = 0;
+        uint256 tgeAmount = 0;
+        //calculate tge, if tge is zero, then no tokens are due
+        if (vestingSchedule.tgePermille > 0) {
+            tgeAmount = (vestingSchedule.totalAmount * vestingSchedule.tgePermille) / 1000;
+            releasable += tgeAmount;
+        }
         if (currentTime < vestingSchedule.startTimestamp + vestingSchedule.cliffDuration) {
-            return 0;
+            return releasable;
         } else if (
             currentTime >=
-            vestingSchedule.startTimestamp +
-                vestingSchedule.cliffDuration +
-                vestingSchedule.vestingDuration
+            vestingSchedule.startTimestamp + vestingSchedule.cliffDuration + vestingSchedule.vestingDuration
         ) {
-            return vestingSchedule.totalAmount - vestingSchedule.releasedAmount;
+            releasable = vestingSchedule.totalAmount - vestingSchedule.releasedAmount;
+            return releasable;
         } else {
-            uint256 timeFromStart = currentTime -
-                (vestingSchedule.startTimestamp + vestingSchedule.cliffDuration);
-            uint256 secondsPerSlice = vestingSchedule.slicePeriodSeconds;
+            uint256 timeFromStart = currentTime - (vestingSchedule.startTimestamp + vestingSchedule.cliffDuration);
             // Division before multiplication is intentional to floor the result.
-            uint256 vestedSlicePeriods = timeFromStart / secondsPerSlice;
-            uint256 vestedSeconds = vestedSlicePeriods * secondsPerSlice;
+            uint256 vestedSlicePeriods = timeFromStart / vestingSchedule.slicePeriodSeconds;
+            uint256 vestedSeconds = vestedSlicePeriods * vestingSchedule.slicePeriodSeconds;
             // Compute the amount of tokens that are vested.
-            uint256 vestedAmount = (vestingSchedule.totalAmount * vestedSeconds) /
+            uint256 vestedAmount = ((vestingSchedule.totalAmount - tgeAmount) * vestedSeconds) /
                 vestingSchedule.vestingDuration;
             // Subtract the amount already released and return.
-            return vestedAmount - vestingSchedule.releasedAmount;
+            releasable += vestedAmount - vestingSchedule.releasedAmount;
         }
+        return releasable;
     }
 
     /**
@@ -126,9 +123,7 @@ abstract contract MINVestingBase is Ownable {
         _vestingSchedules[vestingSchedule.beneficiary] = vestingSchedule;
     }
 
-    function getVestingSchedule(
-        address beneficiary
-    ) public view returns (MINStructs.VestingSchedule memory) {
+    function getVestingSchedule(address beneficiary) public view returns (MINStructs.VestingSchedule memory) {
         return _vestingSchedules[beneficiary];
     }
 }

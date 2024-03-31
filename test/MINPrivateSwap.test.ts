@@ -1,7 +1,7 @@
 import {time, loadFixture} from '@nomicfoundation/hardhat-toolbox/network-helpers';
 import {anyValue} from '@nomicfoundation/hardhat-chai-matchers/withArgs';
 import {expect} from 'chai';
-import {ethers} from 'hardhat';
+import {ethers, network} from 'hardhat';
 import {
   MINToken,
   MINToken__factory,
@@ -22,9 +22,16 @@ const AMOUNT = 300_000_000;
 const DECIMALS = 18;
 describe('MINPrivateSwap', function () {
   // should be able to deploy
+  this.beforeAll(async function () {
+    await network.provider.request({
+      method: 'hardhat_reset',
+      params: [],
+    });
+  });
   beforeEach('should be deployed', async function () {
     deployer = await ethers.provider.getSigner(0);
     anyone = await ethers.provider.getSigner(1);
+
     min = await new MINToken__factory(deployer).deploy(AMOUNT);
     swapToken = await new MockToken__factory(deployer).deploy(AMOUNT);
     const schedule = VESTING_SCHEDULES.private;
