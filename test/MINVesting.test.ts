@@ -1,14 +1,23 @@
 import {time, loadFixture} from '@nomicfoundation/hardhat-toolbox/network-helpers';
 import {expect} from 'chai';
 import {ethers, network} from 'hardhat';
-import {MINVesting, MINVesting__factory, MINToken, MINToken__factory} from '../typechain';
+import {
+  MINVesting,
+  MINVesting__factory,
+  MINToken,
+  MINToken__factory,
+  MockToken,
+  MockToken__factory,
+} from '../typechain';
 import {MINStructs} from '../typechain/contracts/vesting/MINVesting';
 import {SignerWithAddress} from '@nomicfoundation/hardhat-ethers/signers';
 import {VESTING_SCHEDULES} from '../tokenomics/tokenomics';
 let deployer: SignerWithAddress;
 let nonOwner: SignerWithAddress;
 let token: MINToken;
+let mockToken: MockToken;
 let vesting: MINVesting;
+let vestingWithMockToken: MINVesting;
 const MONTH = 60 * 60 * 24 * 30;
 const impersonate = async (address: string) => {
   await network.provider.request({
@@ -128,6 +137,30 @@ describe('MINVesting', function () {
     it('should allow release of tokens after cliff period', async function () {
       const beneficiary = await impersonate(VESTING_SCHEDULES.strategic.beneficiary);
       await expect(vesting.connect(beneficiary).release(1)).to.not.be.reverted;
+    });
+
+    it('should revert if token transfer fails', async function () {
+      mockToken = await new MockToken__factory(deployer).deploy(300_000_000n);
+      vestingWithMockToken = await new MINVesting__factory(deployer).deploy(mockToken);
+      await mockToken.connect(deployer).transfer(vestingWithMockToken, 300_000_000n * 10n ** 18n);
+      await vestingWithMockToken
+        .connect(deployer)
+        .setUpVestingSchedules([
+          VESTING_SCHEDULES.strategic,
+          VESTING_SCHEDULES.private,
+          VESTING_SCHEDULES.public,
+          VESTING_SCHEDULES.enGaranti,
+          VESTING_SCHEDULES.operations,
+          VESTING_SCHEDULES.marketingAndRewards,
+          VESTING_SCHEDULES.devTeam,
+          VESTING_SCHEDULES.reserve,
+          VESTING_SCHEDULES.liquidity,
+        ]);
+      await mockToken.setToFailTransfer(true);
+      const beneficiary = await impersonate(VESTING_SCHEDULES.public.beneficiary);
+      await expect(vestingWithMockToken.connect(beneficiary).release(1)).to.be.revertedWith(
+        'MINVesting: Transfer failed'
+      );
     });
 
     it('should not allow release of more tokens than vested', async function () {

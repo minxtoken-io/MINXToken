@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: MIT
+// En Garanti Teknoloji 2024
+
 pragma solidity 0.8.20;
 
 /**
@@ -9,6 +11,11 @@ import "../utils/MINStructs.sol";
 
 import "../utils/MINVestingBase.sol";
 
+/**
+ * @title MINStrategicSale
+ * @dev This contract manages the strategic sale of MIN tokens. It allows the owner to add beneficiaries and set their vesting schedules.
+ * It also allows the owner to withdraw MIN tokens up to the amount that is not allocated to beneficiaries.
+ */
 contract MINStrategicSale is MINVestingBase {
     using MINStructs for MINStructs.VestingSchedule;
     address[] private _beneficiaries;
@@ -17,10 +24,20 @@ contract MINStrategicSale is MINVestingBase {
 
     MINStructs.VestingSchedule private _strategicSaleVestingSchedule;
 
+    /**
+     * @dev Constructs the MINStrategicSale contract.
+     * @param token The MIN token to be sold.
+     * @param strategicSaleVestingSchedule The vesting schedule for the strategic sale.
+     */
     constructor(MINToken token, MINStructs.VestingSchedule memory strategicSaleVestingSchedule) MINVestingBase(token) {
         _strategicSaleVestingSchedule = strategicSaleVestingSchedule;
     }
 
+    /**
+     * @dev Adds a beneficiary to the strategic sale.
+     * @param beneficiary The address of the beneficiary.
+     * @param amount The amount of tokens allocated to the beneficiary.
+     */
     function addBeneficiary(address beneficiary, uint256 amount) public onlyOwner {
         require(
             getVestingSchedule(beneficiary).beneficiary == address(0),
@@ -48,15 +65,25 @@ contract MINStrategicSale is MINVestingBase {
         setVestingSchedule(vestingSchedule);
     }
 
+    /**
+     * @dev Allows the owner to withdraw MIN tokens up to the amount that is not allocated to beneficiaries.
+     * @param amount The amount of tokens to withdraw.
+     */
     function withdrawMinTokens(uint256 amount) public onlyOwner {
         require(
             amount <= computeWithdrawableMintokens(),
             "MINStrategicSale: cannot withdraw more than beneficiary's total amount"
         );
 
-        getToken().transfer(msg.sender, amount);
+        try getToken().transfer(owner(), amount) returns (bool) {} catch {
+            revert("MINPrivateSwap: Transfer failed");
+        }
     }
 
+    /**
+     * @dev Computes the amount of MIN tokens that can be withdrawn by the owner.
+     * @return The amount of withdrawable tokens.
+     */
     function computeWithdrawableMintokens() public view returns (uint256) {
         uint256 totalAmount = 0;
         for (uint256 i = 0; i < _beneficiaries.length; i++) {

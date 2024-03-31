@@ -2,11 +2,18 @@ import {time, loadFixture} from '@nomicfoundation/hardhat-toolbox/network-helper
 import {anyValue} from '@nomicfoundation/hardhat-chai-matchers/withArgs';
 import {expect} from 'chai';
 import {ethers, network} from 'hardhat';
-import {MINToken, MINToken__factory, MINStrategicSale, MINStrategicSale__factory} from '../typechain';
+import {
+  MINToken,
+  MINToken__factory,
+  MINStrategicSale,
+  MINStrategicSale__factory,
+  MockToken,
+  MockToken__factory,
+} from '../typechain';
 import {SignerWithAddress} from '@nomicfoundation/hardhat-ethers/signers';
 import {VESTING_SCHEDULES} from '../tokenomics/tokenomics';
 let deployer: SignerWithAddress;
-let min: MINToken;
+let min: MockToken;
 let anyone: SignerWithAddress;
 let minStrategicSale: MINStrategicSale;
 const AMOUNT = 300_000_000;
@@ -22,7 +29,7 @@ describe('MINStrategicSale', function () {
     deployer = await ethers.provider.getSigner(0);
     anyone = await ethers.provider.getSigner(1);
 
-    min = await new MINToken__factory(deployer).deploy(BigInt(AMOUNT));
+    min = await new MockToken__factory(deployer).deploy(BigInt(AMOUNT));
     const schedule = VESTING_SCHEDULES.strategic;
     minStrategicSale = await new MINStrategicSale__factory(deployer).deploy(min, {
       tgePermille: schedule.tgePermille,
@@ -48,19 +55,25 @@ describe('MINStrategicSale', function () {
 
     await min.connect(deployer).transfer(minStrategicSale, 2000n * 10n ** 18n);
     await expect(minStrategicSale.connect(deployer).addBeneficiary(anyone, 1000n * 10n ** 18n)).to.not.be.reverted;
-    await expect(minStrategicSale.connect(deployer).addBeneficiary(anyone, 1000n * 10n ** 18n)).to.be.reverted;
+    await expect(minStrategicSale.connect(deployer).addBeneficiary(anyone, 1000n * 10n ** 18n)).to.be.revertedWith(
+      'MINStrategicSale: beneficiary already exists'
+    );
   });
 
   it('should not allow owner to add a beneficary with 0 amount', async function () {
     const balance = await min.balanceOf(deployer.address);
 
     await min.connect(deployer).transfer(minStrategicSale, 2000n * 10n ** 18n);
-    await expect(minStrategicSale.connect(deployer).addBeneficiary(anyone, 0)).to.be.reverted;
+    await expect(minStrategicSale.connect(deployer).addBeneficiary(anyone, 0)).to.be.revertedWith(
+      'MINStrategicSale: amount must be greater than 0'
+    );
   });
 
   it('should not allow owner to add a beneficary with more amount than contract', async function () {
     await min.connect(deployer).transfer(minStrategicSale, 2000n * 10n ** 18n);
-    await expect(minStrategicSale.connect(deployer).addBeneficiary(anyone, 2001n * 10n ** 18n)).to.be.reverted;
+    await expect(minStrategicSale.connect(deployer).addBeneficiary(anyone, 2001n * 10n ** 18n)).to.be.revertedWith(
+      'MINStrategicSale: amount must be less than or equal to contract balance'
+    );
   });
 
   it('should not allow non-owner to add beneficiaries', async function () {
@@ -81,10 +94,20 @@ describe('MINStrategicSale', function () {
     await expect(minStrategicSale.connect(deployer).withdrawMinTokens(2000n * 10n ** 18n)).to.not.be.reverted;
   });
 
+  it('should revert withdrawal of mintokens if transfer fails', async function () {
+    await min.connect(deployer).transfer(minStrategicSale, 2000n * 10n ** 18n);
+    await min.setToFailTransfer(true);
+    await expect(minStrategicSale.connect(deployer).withdrawMinTokens(2000n * 10n ** 18n)).to.be.revertedWith(
+      'MINPrivateSwap: Transfer failed'
+    );
+  });
+
   it('should not allow owner to withdraw more than non-vested tokens', async function () {
     await min.connect(deployer).transfer(minStrategicSale, 2000n * 10n ** 18n);
     const withdrawable = await minStrategicSale.connect(anyone).computeWithdrawableMintokens();
-    await expect(minStrategicSale.connect(deployer).withdrawMinTokens(3000n * 10n ** 18n)).to.be.reverted;
+    await expect(minStrategicSale.connect(deployer).withdrawMinTokens(3000n * 10n ** 18n)).to.be.revertedWith(
+      "MINStrategicSale: cannot withdraw more than beneficiary's total amount"
+    );
   });
 
   it('should not allow anybody other than owner to withdraw non-vested tokens', async function () {
@@ -123,8 +146,8 @@ describe('MINStrategicSale', function () {
     await expect(strategicSaleWith0Tge.connect(deployer).addBeneficiary(anyone, 1000n * 10n ** 18n)).to.not.be.reverted;
     const releasableAmountWith0Tge = await strategicSaleWith0Tge.computeReleasableAmount(anyone);
     expect(releasableAmountWith0Tge).to.be.equal(0);
-    await time.increase(1200);
+    await time.increase(720);
     const releasableAmountWith0TgeAfterCliff = await strategicSaleWith0Tge.computeReleasableAmount(anyone);
-    console.log(releasableAmountWith0TgeAfterCliff.toString());
+    expect(releasableAmountWith0TgeAfterCliff).to.be.equal((1000n * 10n ** 18n) / 10n);
   });
 });

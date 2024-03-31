@@ -1,4 +1,6 @@
 // SPDX-License-Identifier: MIT
+// En Garanti Teknoloji 2024
+
 pragma solidity 0.8.20;
 
 import "../utils/MINStructs.sol";

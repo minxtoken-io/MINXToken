@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT
+// En Garanti Teknoloji 2024
 pragma solidity 0.8.20;
-
 import "./MINStructs.sol";
 import "../token/MINToken.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
@@ -9,6 +9,9 @@ import "@openzeppelin/contracts/utils/ReentrancyGuard.sol";
 /**
  * @title MINVestingBase
  * @dev This contract handles the vesting schedule for the MIN token.
+ * It provides functionality to set vesting schedules for beneficiaries,
+ * compute the releasable amount of tokens for a beneficiary, and release vested tokens to a beneficiary.
+ * The contract is Ownable, meaning it has an owner who can perform certain administrative functions.
  */
 abstract contract MINVestingBase is Ownable {
     using MINStructs for MINStructs.VestingSchedule;
@@ -56,8 +59,9 @@ abstract contract MINVestingBase is Ownable {
         require(releasableAmount >= amount, "MINVesting: amount exceeds releasable amount");
         MINStructs.VestingSchedule storage vestingSchedule = _vestingSchedules[msg.sender];
         vestingSchedule.releasedAmount += amount;
-
-        _token.transfer(msg.sender, amount);
+        try _token.transfer(msg.sender, amount) returns (bool) {} catch {
+            revert("MINVesting: Transfer failed");
+        }
     }
 
     /**
@@ -110,19 +114,23 @@ abstract contract MINVestingBase is Ownable {
      * @dev Returns the MIN token.
      * @return The MIN token.
      */
-
     function getToken() public view returns (IERC20) {
         return _token;
     }
 
-    ///
-    /// @dev Since it's an abstract, no need for onlyOwner modifier
-    /// @param vestingSchedule The vesting schedule to set.
-
+    /**
+     * @dev Sets the vesting schedule for a beneficiary.
+     * @param vestingSchedule The vesting schedule to set.
+     */
     function setVestingSchedule(MINStructs.VestingSchedule memory vestingSchedule) public {
         _vestingSchedules[vestingSchedule.beneficiary] = vestingSchedule;
     }
 
+    /**
+     * @dev Returns the vesting schedule for a beneficiary.
+     * @param beneficiary The address of the beneficiary.
+     * @return The vesting schedule of the beneficiary.
+     */
     function getVestingSchedule(address beneficiary) public view returns (MINStructs.VestingSchedule memory) {
         return _vestingSchedules[beneficiary];
     }
