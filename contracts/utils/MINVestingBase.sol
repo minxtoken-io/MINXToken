@@ -70,7 +70,11 @@ abstract contract MINVestingBase is Ownable {
      * @param beneficiary The address of the beneficiary.
      * @return The amount of tokens that can be released.
      */
-    function computeReleasableAmount(address beneficiary) public view returns (uint256) {
+    function computeReleasableAmount(address beneficiary) public view virtual returns (uint256) {
+        require(
+            _vestingSchedules[beneficiary].beneficiary == beneficiary,
+            "MINVesting: beneficiary not found"
+        );
         MINStructs.VestingSchedule storage vestingSchedule = _vestingSchedules[beneficiary];
         uint256 currentTime = getCurrentTime();
         if (currentTime < vestingSchedule.startTimestamp + vestingSchedule.cliffDuration) {
@@ -114,13 +118,17 @@ abstract contract MINVestingBase is Ownable {
         return _token;
     }
 
-    function setVestingSchedule(MINStructs.VestingSchedule memory vestingSchedule) internal {
+    ///
+    /// @dev Since it's an abstract, no need for onlyOwner modifier
+    /// @param vestingSchedule The vesting schedule to set.
+
+    function setVestingSchedule(MINStructs.VestingSchedule memory vestingSchedule) public {
         _vestingSchedules[vestingSchedule.beneficiary] = vestingSchedule;
     }
 
     function getVestingSchedule(
         address beneficiary
-    ) internal view returns (MINStructs.VestingSchedule memory) {
+    ) public view returns (MINStructs.VestingSchedule memory) {
         return _vestingSchedules[beneficiary];
     }
 }

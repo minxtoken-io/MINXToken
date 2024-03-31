@@ -1,5 +1,3 @@
-import {MINStructs} from '../typechain/contracts/MINVesting';
-
 const START_DATE = Math.floor(new Date('May 1 2024 00:00:00 GMT+0300').getTime() / 1000);
 const MONTH = 60 * 60 * 24 * 30;
 
