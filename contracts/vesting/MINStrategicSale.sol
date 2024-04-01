@@ -21,7 +21,6 @@ contract MINStrategicSale is MINVestingBase {
     using MINStructs for MINStructs.VestingSchedule;
     using SafeERC20 for IERC20;
 
-    address[] private _beneficiaries;
     mapping(address => bool) private _addedToBeneficiaries;
     mapping(address => uint256) private _swapTokenBalances;
 
@@ -49,7 +48,7 @@ contract MINStrategicSale is MINVestingBase {
 
         require(amount > 0, "MINStrategicSale: amount must be greater than 0");
         require(
-            amount <= getToken().balanceOf(address(this)),
+            amount <= getToken().balanceOf(address(this)) - getTotalReservedAmount(),
             "MINStrategicSale: amount must be less than or equal to contract balance"
         );
 
@@ -64,7 +63,8 @@ contract MINStrategicSale is MINVestingBase {
             releasedAmount: 0
         });
 
-        _beneficiaries.push(beneficiary);
+        addToTotalReservedAmount(amount);
+
         setVestingSchedule(vestingSchedule);
     }
 
@@ -86,11 +86,6 @@ contract MINStrategicSale is MINVestingBase {
      * @return The amount of withdrawable tokens.
      */
     function computeWithdrawableMintokens() public view returns (uint256) {
-        uint256 totalAmount = 0;
-        for (uint256 i = 0; i < _beneficiaries.length; i++) {
-            MINStructs.VestingSchedule memory vestingSchedule = getVestingSchedule(_beneficiaries[i]);
-            totalAmount += vestingSchedule.totalAmount - vestingSchedule.releasedAmount;
-        }
-        return getToken().balanceOf(address(this)) - totalAmount;
+        return getToken().balanceOf(address(this)) - (getTotalReservedAmount() - getTotalReleasedAmount());
     }
 }

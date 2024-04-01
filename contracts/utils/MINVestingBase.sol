@@ -21,6 +21,8 @@ abstract contract MINVestingBase is Ownable {
     // Mapping of beneficiary addresses to their vesting schedules
     mapping(address => MINStructs.VestingSchedule) private _vestingSchedules;
 
+    uint256 private _totalReleasedAmount = 0;
+    uint256 private _totalReservedAmount = 0;
     // The MIN token
     IERC20 private immutable _token;
 
@@ -61,6 +63,7 @@ abstract contract MINVestingBase is Ownable {
         require(releasableAmount >= amount, "MINVesting: amount exceeds releasable amount");
         MINStructs.VestingSchedule storage vestingSchedule = _vestingSchedules[msg.sender];
         vestingSchedule.releasedAmount += amount;
+        _totalReleasedAmount += amount;
 
         SafeERC20.safeTransfer(_token, msg.sender, amount);
     }
@@ -112,6 +115,31 @@ abstract contract MINVestingBase is Ownable {
     }
 
     /**
+     * @dev Updates the total reserved amount.
+     * @param amount The amount of tokens allocated to a beneficiary.
+     */
+    function addToTotalReservedAmount(uint256 amount) internal {
+        _totalReservedAmount += amount;
+    }
+
+    /**
+     * @dev Returns the total amount of tokens that have been released.
+     * @return The total amount of tokens that have been released.
+     */
+
+    function getTotalReleasedAmount() public view returns (uint256) {
+        return _totalReleasedAmount;
+    }
+
+    /**
+     * @dev Returns the total amount of tokens that have been reserved.
+     * @return The total amount of tokens that have been reserved.
+     */
+    function getTotalReservedAmount() public view returns (uint256) {
+        return _totalReservedAmount;
+    }
+
+    /**
      * @dev Returns the MIN token.
      * @return The MIN token.
      */
@@ -124,6 +152,15 @@ abstract contract MINVestingBase is Ownable {
      * @param vestingSchedule The vesting schedule to set.
      */
     function setVestingSchedule(MINStructs.VestingSchedule memory vestingSchedule) public {
+        require(vestingSchedule.beneficiary != address(0), "MINVesting: beneficiary address cannot be zero");
+        require(vestingSchedule.totalAmount > 0, "MINVesting: total amount must be greater than zero");
+        require(vestingSchedule.slicePeriodSeconds > 0, "MINVesting: slice period must be greater than zero");
+        require(
+            vestingSchedule.vestingDuration > 0 &&
+                vestingSchedule.slicePeriodSeconds <= vestingSchedule.vestingDuration,
+            "MINVesting: vesting duration must be greater than zero and slice period"
+        );
+
         _vestingSchedules[vestingSchedule.beneficiary] = vestingSchedule;
     }
 

@@ -23,6 +23,7 @@ contract MINPrivateSwap is MINVestingBase {
     IERC20 private immutable _swapToken; // The token to be swapped
     address[] private _beneficiaries; // List of beneficiaries
     mapping(address => bool) private _addedToBeneficiaries; // Mapping to check if a beneficiary is added
+    uint256 private _totalSwapToken; // The total amount of swap tokens
     mapping(address => uint256) private _swapTokenBalances; // Mapping of swap token balances
     uint256 private immutable _saleEndTime; // The end time of the sale
     uint256 private immutable _ratioMinToSwap; // The ratio of MIN tokens to swap tokens
@@ -68,6 +69,8 @@ contract MINPrivateSwap is MINVestingBase {
             _addedToBeneficiaries[msg.sender] = true;
         }
         _swapTokenBalances[msg.sender] += amount;
+        _totalSwapToken += amount;
+        _updateBeneficiaryVestedAmount(msg.sender);
 
         SafeERC20.safeTransferFrom(_swapToken, msg.sender, address(this), amount);
     }
@@ -79,6 +82,8 @@ contract MINPrivateSwap is MINVestingBase {
     function withdraw(uint256 amount) public onlyBeforeSaleEnd {
         require(_swapTokenBalances[msg.sender] >= amount, "MINPrivateSwap: insufficient balance");
         _swapTokenBalances[msg.sender] -= amount;
+        _totalSwapToken -= amount;
+        _updateBeneficiaryVestedAmount(msg.sender);
 
         SafeERC20.safeTransfer(_swapToken, msg.sender, amount);
     }
@@ -93,7 +98,6 @@ contract MINPrivateSwap is MINVestingBase {
             (_swapToken.balanceOf(address(this)) * 100) / _ratioMinToSwap <= getToken().balanceOf(address(this)),
             "MINPrivateSwap: Can't withdraw swap tokens before sufficient MIN tokens are deposited"
         );
-        _transformSwapBalancesToVestingSchedules();
 
         SafeERC20.safeTransfer(_swapToken, msg.sender, amount);
     }
@@ -103,10 +107,7 @@ contract MINPrivateSwap is MINVestingBase {
      * @param amount The amount of MIN tokens to withdraw.
      */
     function withdrawMinToken(uint256 amount) public onlyOwner onlyAfterSaleEnd {
-        require(
-            amount <= getToken().balanceOf(address(this)) - calculateWithdrawableMinToken(),
-            "MINPrivateSwap: Not enough MIN tokens to withdraw"
-        );
+        require(amount <= calculateWithdrawableMinToken(), "MINPrivateSwap: Not enough MIN tokens to withdraw");
 
         SafeERC20.safeTransfer(getToken(), msg.sender, amount);
     }
@@ -117,34 +118,26 @@ contract MINPrivateSwap is MINVestingBase {
      */
     function calculateWithdrawableMinToken() public view returns (uint256) {
         if (block.timestamp < _saleEndTime) return 0;
-        uint256 totalSwapToken = 0;
-        for (uint256 i = 0; i < _beneficiaries.length; i++) {
-            totalSwapToken += _swapTokenBalances[_beneficiaries[i]];
-        }
-        return ((totalSwapToken * 100) / _ratioMinToSwap);
+
+        return getToken().balanceOf(address(this)) - ((_totalSwapToken * 100) / _ratioMinToSwap);
     }
 
-    /**
-     * @dev Transforms the swap token balances to vesting schedules.
-     */
-    function _transformSwapBalancesToVestingSchedules() private {
-        for (uint256 i = 0; i < _beneficiaries.length; i++) {
-            address beneficiary = _beneficiaries[i];
-            uint256 swapTokenBalance = _swapTokenBalances[beneficiary];
-            if (swapTokenBalance > 0) {
-                MINStructs.VestingSchedule memory vestingSchedule = MINStructs.VestingSchedule({
-                    tgePermille: 0,
-                    beneficiary: beneficiary,
-                    startTimestamp: _privateSaleVestingSchedule.startTimestamp,
-                    cliffDuration: _privateSaleVestingSchedule.cliffDuration,
-                    vestingDuration: _privateSaleVestingSchedule.vestingDuration,
-                    slicePeriodSeconds: _privateSaleVestingSchedule.slicePeriodSeconds,
-                    totalAmount: ((swapTokenBalance * 100) / _ratioMinToSwap),
-                    releasedAmount: 0
-                });
-                setVestingSchedule(vestingSchedule);
-            }
+    function _updateBeneficiaryVestedAmount(address beneficiary) private {
+        uint256 swapTokenBalance = _swapTokenBalances[beneficiary];
+        MINStructs.VestingSchedule memory vestingSchedule = MINStructs.VestingSchedule({
+            tgePermille: 0,
+            beneficiary: beneficiary,
+            startTimestamp: _privateSaleVestingSchedule.startTimestamp,
+            cliffDuration: _privateSaleVestingSchedule.cliffDuration,
+            vestingDuration: _privateSaleVestingSchedule.vestingDuration,
+            slicePeriodSeconds: _privateSaleVestingSchedule.slicePeriodSeconds,
+            totalAmount: 0,
+            releasedAmount: 0
+        });
+        if (swapTokenBalance > 0) {
+            vestingSchedule.totalAmount = ((swapTokenBalance * 100) / _ratioMinToSwap);
         }
+        setVestingSchedule(vestingSchedule);
     }
 
     modifier onlyAfterSaleEnd() {
