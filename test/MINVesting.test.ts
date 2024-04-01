@@ -47,43 +47,102 @@ describe('MINVesting', function () {
 
   it('should not be able to setup schedules without enough tokens', async function () {
     await expect(
-      vesting.connect(deployer).setUpVestingSchedules([
-        {
-          tgePermille: 0,
-          beneficiary: deployer.address,
-          startTimestamp: VESTING_SCHEDULES.strategic.startTimestamp,
-          cliffDuration: 2 * MONTH,
-          vestingDuration: 18 * MONTH,
-          slicePeriodSeconds: MONTH,
-          totalAmount: BigInt(900_000_001) * 10n ** 18n,
-          releasedAmount: 0,
-        },
-      ])
-    ).to.be.revertedWith('MINVesting: insufficient balance for vesting schedules');
+      vesting.connect(deployer).addVestingSchedule({
+        tgePermille: 0,
+        beneficiary: deployer.address,
+        startTimestamp: VESTING_SCHEDULES.strategic.startTimestamp,
+        cliffDuration: 2 * MONTH,
+        vestingDuration: 18 * MONTH,
+        slicePeriodSeconds: MONTH,
+        totalAmount: BigInt(900_000_001) * 10n ** 18n,
+        releasedAmount: 0,
+      })
+    ).to.be.revertedWith('MINVesting: insufficient balance for vesting schedule');
+  });
+  it('should not be able to setup schedules with address(0)', async function () {
+    await expect(
+      vesting.connect(deployer).addVestingSchedule({
+        tgePermille: 0,
+        beneficiary: '0x' + '0'.repeat(40),
+        startTimestamp: VESTING_SCHEDULES.strategic.startTimestamp,
+        cliffDuration: 2 * MONTH,
+        vestingDuration: 18 * MONTH,
+        slicePeriodSeconds: MONTH,
+        totalAmount: 0,
+        releasedAmount: 100n * 10n ** 18n,
+      })
+    ).to.be.revertedWith('MINVesting: beneficiary address cannot be zero');
+  });
+  it('should not be able to setup schedules with slicePeriodSeconds of 0', async function () {
+    await token.connect(deployer).transfer(vesting, 300_000_000n * 10n ** 18n);
+    await expect(
+      vesting.connect(deployer).addVestingSchedule({
+        tgePermille: 0,
+        beneficiary: deployer.address,
+        startTimestamp: VESTING_SCHEDULES.strategic.startTimestamp,
+        cliffDuration: 2 * MONTH,
+        vestingDuration: 18 * MONTH,
+        slicePeriodSeconds: 0,
+        totalAmount: 100n * 10n ** 18n,
+        releasedAmount: 0,
+      })
+    ).to.be.revertedWith('MINVesting: slice period must be greater than zero');
+  });
+  it('should not be able to setup schedules with vestingDuration of 0 or vestingDuration less than slicePeriodSeconds', async function () {
+    await token.connect(deployer).transfer(vesting, 300_000_000n * 10n ** 18n);
+    await expect(
+      vesting.connect(deployer).addVestingSchedule({
+        tgePermille: 0,
+        beneficiary: deployer.address,
+        startTimestamp: VESTING_SCHEDULES.strategic.startTimestamp,
+        cliffDuration: 2 * MONTH,
+        vestingDuration: MONTH / 2,
+        slicePeriodSeconds: MONTH,
+        totalAmount: 100n * 10n ** 18n,
+        releasedAmount: 0,
+      })
+    ).to.be.revertedWith('MINVesting: vesting duration must be greater than zero and slice period');
+  });
+
+  it('should not be able to setup schedules with 0 total amount', async function () {
+    await expect(
+      vesting.connect(deployer).addVestingSchedule({
+        tgePermille: 0,
+        beneficiary: deployer.address,
+        startTimestamp: VESTING_SCHEDULES.strategic.startTimestamp,
+        cliffDuration: 2 * MONTH,
+        vestingDuration: 18 * MONTH,
+        slicePeriodSeconds: MONTH,
+        totalAmount: 0,
+        releasedAmount: 0,
+      })
+    ).to.be.revertedWith('MINVesting: total amount must be greater than zero');
   });
 
   it('should not allow non-owner to setup', async function () {
-    await expect(
-      vesting.connect(nonOwner).setUpVestingSchedules([VESTING_SCHEDULES.strategic])
-    ).revertedWithCustomError(vesting, 'OwnableUnauthorizedAccount');
+    await expect(vesting.connect(nonOwner).addVestingSchedule(VESTING_SCHEDULES.strategic)).revertedWithCustomError(
+      vesting,
+      'OwnableUnauthorizedAccount'
+    );
   });
 
   describe('With correct vesting setup', function () {
     beforeEach(async function () {
       await token.connect(deployer).transfer(vesting, 300_000_000n * 10n ** 18n);
-      await vesting
-        .connect(deployer)
-        .setUpVestingSchedules([
-          VESTING_SCHEDULES.strategic,
-          VESTING_SCHEDULES.private,
-          VESTING_SCHEDULES.public,
-          VESTING_SCHEDULES.enGaranti,
-          VESTING_SCHEDULES.operations,
-          VESTING_SCHEDULES.marketingAndRewards,
-          VESTING_SCHEDULES.devTeam,
-          VESTING_SCHEDULES.reserve,
-          VESTING_SCHEDULES.liquidity,
-        ]);
+
+      for (const schedule of [
+        VESTING_SCHEDULES.strategic,
+        VESTING_SCHEDULES.private,
+        VESTING_SCHEDULES.public,
+        VESTING_SCHEDULES.enGaranti,
+        VESTING_SCHEDULES.operations,
+        VESTING_SCHEDULES.marketingAndRewards,
+        VESTING_SCHEDULES.devTeam,
+        VESTING_SCHEDULES.reserve,
+        VESTING_SCHEDULES.liquidity,
+      ]) {
+        await vesting.connect(deployer).addVestingSchedule(schedule);
+      }
     });
 
     it('should not allow non-beneficiary to release tokens', async function () {
@@ -143,24 +202,23 @@ describe('MINVesting', function () {
       mockToken = await new MockToken__factory(deployer).deploy(300_000_000n);
       vestingWithMockToken = await new MINVesting__factory(deployer).deploy(mockToken);
       await mockToken.connect(deployer).transfer(vestingWithMockToken, 300_000_000n * 10n ** 18n);
-      await vestingWithMockToken
-        .connect(deployer)
-        .setUpVestingSchedules([
-          VESTING_SCHEDULES.strategic,
-          VESTING_SCHEDULES.private,
-          VESTING_SCHEDULES.public,
-          VESTING_SCHEDULES.enGaranti,
-          VESTING_SCHEDULES.operations,
-          VESTING_SCHEDULES.marketingAndRewards,
-          VESTING_SCHEDULES.devTeam,
-          VESTING_SCHEDULES.reserve,
-          VESTING_SCHEDULES.liquidity,
-        ]);
+
+      for (const schedule of [
+        VESTING_SCHEDULES.strategic,
+        VESTING_SCHEDULES.private,
+        VESTING_SCHEDULES.public,
+        VESTING_SCHEDULES.enGaranti,
+        VESTING_SCHEDULES.operations,
+        VESTING_SCHEDULES.marketingAndRewards,
+        VESTING_SCHEDULES.devTeam,
+        VESTING_SCHEDULES.reserve,
+        VESTING_SCHEDULES.liquidity,
+      ]) {
+        await vestingWithMockToken.connect(deployer).addVestingSchedule(schedule);
+      }
       await mockToken.setToFailTransfer(true);
       const beneficiary = await impersonate(VESTING_SCHEDULES.public.beneficiary);
-      await expect(vestingWithMockToken.connect(beneficiary).release(1)).to.be.revertedWith(
-        'MINVesting: Transfer failed'
-      );
+      await expect(vestingWithMockToken.connect(beneficiary).release(1)).to.be.reverted;
     });
 
     it('should not allow release of more tokens than vested', async function () {

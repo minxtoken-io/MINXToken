@@ -20,12 +20,17 @@ contract MINVesting is MINVestingBase {
      */
     constructor(IERC20 token) MINVestingBase(token) {}
 
+    /**
+     * @dev Adds a vesting schedule for a beneficiary.
+     * @param vestingSchedule The vesting schedule to add.
+     */
+
     function addVestingSchedule(MINStructs.VestingSchedule memory vestingSchedule) public onlyOwner {
         require(
             vestingSchedule.totalAmount <= getToken().balanceOf(address(this)) - getTotalReservedAmount(),
             "MINVesting: insufficient balance for vesting schedule"
         );
 
-        setVestingSchedule(vestingSchedule);
+        _setVestingSchedule(vestingSchedule);
     }
 }

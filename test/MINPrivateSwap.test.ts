@@ -64,8 +64,9 @@ describe('MINPrivateSwap', function () {
 
   it('should not be able to let users deposit swap token if not approved', async function () {
     const swapTokenAmount = BigInt(1) * 10n ** BigInt(DECIMALS);
-    await expect(minPrivateSwap.connect(deployer).deposit(swapTokenAmount)).to.be.revertedWith(
-      'MINPrivateSwap: Transfer failed'
+    await expect(minPrivateSwap.connect(deployer).deposit(swapTokenAmount)).to.be.revertedWithCustomError(
+      swapToken,
+      'ERC20InsufficientAllowance'
     );
   });
 
@@ -128,9 +129,7 @@ describe('MINPrivateSwap', function () {
     await swapToken.connect(deployer).approve(minPrivateSwap, swapTokenAmount);
     await minPrivateSwap.connect(deployer).deposit(swapTokenAmount);
     await swapToken.connect(deployer).setToFailTransfer(true);
-    await expect(minPrivateSwap.connect(deployer).withdraw(swapTokenAmount)).to.be.revertedWith(
-      'MINPrivateSwap: Transfer failed'
-    );
+    await expect(minPrivateSwap.connect(deployer).withdraw(swapTokenAmount)).to.be.reverted;
   });
 
   it('should calculate withdrawable minToken amount as zero before sale ends', async function () {
@@ -207,9 +206,7 @@ describe('MINPrivateSwap', function () {
     await time.increase(300);
     await min.connect(deployer).transfer(minPrivateSwap, swapTokenAmount * 100n);
     await swapToken.connect(deployer).setToFailTransfer(true);
-    await expect(minPrivateSwap.connect(deployer).withdrawSwapToken(swapTokenAmount)).to.be.revertedWith(
-      'MINPrivateSwap: Transfer failed'
-    );
+    await expect(minPrivateSwap.connect(deployer).withdrawSwapToken(swapTokenAmount)).to.be.reverted;
   });
 
   it('should let deployer withdraw any unsold mintokens', async function () {
@@ -259,8 +256,6 @@ describe('MINPrivateSwap', function () {
     await min.connect(deployer).transfer(minPrivateSwap, BigInt(155) * 10n ** BigInt(DECIMALS));
     await minPrivateSwap.connect(deployer).withdrawSwapToken(swapTokenAmount);
     await min.connect(deployer).setToFailTransfer(true);
-    await expect(
-      minPrivateSwap.connect(deployer).withdrawMinToken(BigInt(5) * 10n ** BigInt(DECIMALS))
-    ).to.be.revertedWith('MINPrivateSwap: Transfer failed');
+    await expect(minPrivateSwap.connect(deployer).withdrawMinToken(BigInt(5) * 10n ** BigInt(DECIMALS))).to.be.reverted;
   });
 });

@@ -35,6 +35,9 @@ contract MINStrategicSale is MINVestingBase {
         _strategicSaleVestingSchedule = strategicSaleVestingSchedule;
     }
 
+    event BeneficiaryAdded(address indexed beneficiary, uint256 amount);
+    event OwnerMinTokenWithdraw(uint256 amount);
+
     /**
      * @dev Adds a beneficiary to the strategic sale.
      * @param beneficiary The address of the beneficiary.
@@ -65,7 +68,9 @@ contract MINStrategicSale is MINVestingBase {
 
         addToTotalReservedAmount(amount);
 
-        setVestingSchedule(vestingSchedule);
+        _setVestingSchedule(vestingSchedule);
+
+        emit BeneficiaryAdded(beneficiary, amount);
     }
 
     /**
@@ -79,6 +84,7 @@ contract MINStrategicSale is MINVestingBase {
         );
 
         SafeERC20.safeTransfer(getToken(), owner(), amount);
+        emit OwnerMinTokenWithdraw(amount);
     }
 
     /**

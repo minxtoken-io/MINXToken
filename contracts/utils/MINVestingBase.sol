@@ -34,6 +34,10 @@ abstract contract MINVestingBase is Ownable {
         _token = token;
     }
 
+    event VestingScheduleSet(address indexed beneficiary, MINStructs.VestingSchedule vestingSchedule);
+    event TokensReleased(address indexed beneficiary, uint256 amount);
+    event TotalReservedAmountUpdated(uint256 amount);
+
     /**
      * @dev Modifier to make a function callable only by beneficiaries.
      */
@@ -66,6 +70,7 @@ abstract contract MINVestingBase is Ownable {
         _totalReleasedAmount += amount;
 
         SafeERC20.safeTransfer(_token, msg.sender, amount);
+        emit TokensReleased(msg.sender, amount);
     }
 
     /**
@@ -120,6 +125,7 @@ abstract contract MINVestingBase is Ownable {
      */
     function addToTotalReservedAmount(uint256 amount) internal {
         _totalReservedAmount += amount;
+        emit TotalReservedAmountUpdated(_totalReservedAmount);
     }
 
     /**
@@ -151,7 +157,7 @@ abstract contract MINVestingBase is Ownable {
      * @dev Sets the vesting schedule for a beneficiary.
      * @param vestingSchedule The vesting schedule to set.
      */
-    function setVestingSchedule(MINStructs.VestingSchedule memory vestingSchedule) public {
+    function _setVestingSchedule(MINStructs.VestingSchedule memory vestingSchedule) internal {
         require(vestingSchedule.beneficiary != address(0), "MINVesting: beneficiary address cannot be zero");
         require(vestingSchedule.totalAmount > 0, "MINVesting: total amount must be greater than zero");
         require(vestingSchedule.slicePeriodSeconds > 0, "MINVesting: slice period must be greater than zero");
@@ -162,6 +168,15 @@ abstract contract MINVestingBase is Ownable {
         );
 
         _vestingSchedules[vestingSchedule.beneficiary] = vestingSchedule;
+        emit VestingScheduleSet(vestingSchedule.beneficiary, vestingSchedule);
+    }
+
+    /**
+     * @dev Removes the vesting schedule for a beneficiary.
+     * @param beneficiary The address of the beneficiary.
+     */
+    function _removeVestingSchedule(address beneficiary) internal {
+        delete _vestingSchedules[beneficiary];
     }
 
     /**
