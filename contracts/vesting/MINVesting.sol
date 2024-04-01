@@ -18,7 +18,7 @@ contract MINVesting is MINVestingBase {
      * @dev Sets the MIN token and the owner of the contract.
      * @param token The MIN token.
      */
-    constructor(MINToken token) MINVestingBase(token) {}
+    constructor(IERC20 token) MINVestingBase(token) {}
 
     /**
      * @dev Sets up the vesting schedules for the beneficiaries.

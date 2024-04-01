@@ -2,7 +2,8 @@
 // En Garanti Teknoloji 2024
 pragma solidity 0.8.20;
 import "./MINStructs.sol";
-import "../token/MINToken.sol";
+import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
+import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/utils/ReentrancyGuard.sol";
 
@@ -15,18 +16,19 @@ import "@openzeppelin/contracts/utils/ReentrancyGuard.sol";
  */
 abstract contract MINVestingBase is Ownable {
     using MINStructs for MINStructs.VestingSchedule;
+    using SafeERC20 for IERC20;
 
     // Mapping of beneficiary addresses to their vesting schedules
     mapping(address => MINStructs.VestingSchedule) private _vestingSchedules;
 
     // The MIN token
-    MINToken private immutable _token;
+    IERC20 private immutable _token;
 
     /**
      * @dev Sets the MIN token and the owner of the contract.
      * @param token The MIN token.
      */
-    constructor(MINToken token) Ownable(msg.sender) {
+    constructor(IERC20 token) Ownable(msg.sender) {
         _token = token;
     }
 
@@ -59,9 +61,8 @@ abstract contract MINVestingBase is Ownable {
         require(releasableAmount >= amount, "MINVesting: amount exceeds releasable amount");
         MINStructs.VestingSchedule storage vestingSchedule = _vestingSchedules[msg.sender];
         vestingSchedule.releasedAmount += amount;
-        try _token.transfer(msg.sender, amount) returns (bool) {} catch {
-            revert("MINVesting: Transfer failed");
-        }
+
+        SafeERC20.safeTransfer(_token, msg.sender, amount);
     }
 
     /**

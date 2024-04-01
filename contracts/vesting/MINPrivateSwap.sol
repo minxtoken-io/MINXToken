@@ -11,11 +11,14 @@ pragma solidity 0.8.20;
  */
 
 import "../utils/MINStructs.sol";
+import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
+import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 
 import "../utils/MINVestingBase.sol";
 
 contract MINPrivateSwap is MINVestingBase {
     using MINStructs for MINStructs.VestingSchedule;
+    using SafeERC20 for IERC20;
 
     IERC20 private immutable _swapToken; // The token to be swapped
     address[] private _beneficiaries; // List of beneficiaries
@@ -36,7 +39,7 @@ contract MINPrivateSwap is MINVestingBase {
      * @param saleDuration The duration of the sale.
      */
     constructor(
-        MINToken minToken,
+        IERC20 minToken,
         IERC20 swapToken,
         uint256 ratioMinToSwap,
         uint256 maxMinToken,
@@ -66,9 +69,7 @@ contract MINPrivateSwap is MINVestingBase {
         }
         _swapTokenBalances[msg.sender] += amount;
 
-        try _swapToken.transferFrom(msg.sender, address(this), amount) returns (bool) {} catch {
-            revert("MINPrivateSwap: Transfer failed");
-        }
+        SafeERC20.safeTransferFrom(_swapToken, msg.sender, address(this), amount);
     }
 
     /**
@@ -78,9 +79,8 @@ contract MINPrivateSwap is MINVestingBase {
     function withdraw(uint256 amount) public onlyBeforeSaleEnd {
         require(_swapTokenBalances[msg.sender] >= amount, "MINPrivateSwap: insufficient balance");
         _swapTokenBalances[msg.sender] -= amount;
-        try _swapToken.transfer(msg.sender, amount) returns (bool) {} catch {
-            revert("MINPrivateSwap: Transfer failed");
-        }
+
+        SafeERC20.safeTransfer(_swapToken, msg.sender, amount);
     }
 
     /**
@@ -94,9 +94,8 @@ contract MINPrivateSwap is MINVestingBase {
             "MINPrivateSwap: Can't withdraw swap tokens before sufficient MIN tokens are deposited"
         );
         _transformSwapBalancesToVestingSchedules();
-        try _swapToken.transfer(msg.sender, amount) returns (bool) {} catch {
-            revert("MINPrivateSwap: Transfer failed");
-        }
+
+        SafeERC20.safeTransfer(_swapToken, msg.sender, amount);
     }
 
     /**
@@ -108,9 +107,8 @@ contract MINPrivateSwap is MINVestingBase {
             amount <= getToken().balanceOf(address(this)) - calculateWithdrawableMinToken(),
             "MINPrivateSwap: Not enough MIN tokens to withdraw"
         );
-        try getToken().transfer(msg.sender, amount) returns (bool) {} catch {
-            revert("MINPrivateSwap: Transfer failed");
-        }
+
+        SafeERC20.safeTransfer(getToken(), msg.sender, amount);
     }
 
     /**

@@ -8,7 +8,8 @@ pragma solidity 0.8.20;
  */
 
 import "../utils/MINStructs.sol";
-
+import "@openzeppelin/contracts/token/ERC20/utils/SafeERC20.sol";
+import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 import "../utils/MINVestingBase.sol";
 
 /**
@@ -18,6 +19,8 @@ import "../utils/MINVestingBase.sol";
  */
 contract MINStrategicSale is MINVestingBase {
     using MINStructs for MINStructs.VestingSchedule;
+    using SafeERC20 for IERC20;
+
     address[] private _beneficiaries;
     mapping(address => bool) private _addedToBeneficiaries;
     mapping(address => uint256) private _swapTokenBalances;
@@ -29,7 +32,7 @@ contract MINStrategicSale is MINVestingBase {
      * @param token The MIN token to be sold.
      * @param strategicSaleVestingSchedule The vesting schedule for the strategic sale.
      */
-    constructor(MINToken token, MINStructs.VestingSchedule memory strategicSaleVestingSchedule) MINVestingBase(token) {
+    constructor(IERC20 token, MINStructs.VestingSchedule memory strategicSaleVestingSchedule) MINVestingBase(token) {
         _strategicSaleVestingSchedule = strategicSaleVestingSchedule;
     }
 
@@ -75,9 +78,7 @@ contract MINStrategicSale is MINVestingBase {
             "MINStrategicSale: cannot withdraw more than beneficiary's total amount"
         );
 
-        try getToken().transfer(owner(), amount) returns (bool) {} catch {
-            revert("MINPrivateSwap: Transfer failed");
-        }
+        SafeERC20.safeTransfer(getToken(), owner(), amount);
     }
 
     /**
