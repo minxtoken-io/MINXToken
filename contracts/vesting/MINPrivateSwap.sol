@@ -28,9 +28,27 @@ contract MINPrivateSwap is MINVestingBase {
     uint256 private immutable _maxMinToken; // The maximum amount of MIN tokens
     MINStructs.VestingSchedule private _privateSaleVestingSchedule; // The vesting schedule for the private sale
 
+    /**
+     * @dev Emitted when a beneficiary deposits swap tokens.
+     * @param beneficiary The beneficiary address.
+     * @param amount The amount of swap tokens deposited.
+     */
     event BeneficiaryDeposit(address indexed beneficiary, uint256 amount);
+    /**
+     * @dev Emitted when a beneficiary withdraws swap tokens.
+     * @param beneficiary The beneficiary address.
+     * @param amount The amount of swap tokens withdrawn.
+     */
     event BeneficiaryWithdraw(address indexed beneficiary, uint256 amount);
+    /**
+     * @dev Emitted when the owner withdraws swap tokens.
+     * @param amount The amount of swap tokens withdrawn.
+     */
     event OwnerSwapTokenWithdraw(uint256 amount);
+    /**
+     * @dev Emitted when the owner withdraws MIN tokens.
+     * @param amount The amount of MIN tokens withdrawn.
+     */
     event OwnerMinTokenWithdraw(uint256 amount);
 
     modifier onlyAfterSaleEnd() {

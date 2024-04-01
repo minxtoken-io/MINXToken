@@ -1,0 +1,245 @@
+<?xml version="1.0" standalone="no"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="818pt" height="802pt" viewBox="0.00 0.00 818.36 802.00">
+<g id="graph0" class="graph" transform="translate(4,798) scale(1)" data-name="G">
+
+<polygon fill="#2e3e56" stroke="none" points="-4,4 -4,-798 814.36,-798 814.36,4 -4,4" style=""/>
+<g id="clust1" class="cluster" data-name="clusterMINPrivateSwap">
+
+<path fill="#445773" stroke="#445773" d="M20,-232C20,-232 790.36,-232 790.36,-232 796.36,-232 802.36,-238 802.36,-244 802.36,-244 802.36,-637 802.36,-637 802.36,-643 796.36,-649 790.36,-649 790.36,-649 20,-649 20,-649 14,-649 8,-643 8,-637 8,-637 8,-244 8,-244 8,-238 14,-232 20,-232" style=""/>
+<text text-anchor="middle" x="405.18" y="-632.4" font-family="Times,serif" font-size="14.00" fill="#f0f0f0" style="">MINPrivateSwap</text>
+</g>
+<g id="clust2" class="cluster" data-name="clusterIERC20">
+
+<path fill="#3b4b63" stroke="#e8726d" stroke-dasharray="5,2" d="M346.01,-147C346.01,-147 439.43,-147 439.43,-147 445.43,-147 451.43,-153 451.43,-159 451.43,-159 451.43,-212 451.43,-212 451.43,-218 445.43,-224 439.43,-224 439.43,-224 346.01,-224 346.01,-224 340.01,-224 334.01,-218 334.01,-212 334.01,-212 334.01,-159 334.01,-159 334.01,-153 340.01,-147 346.01,-147" style=""/>
+<text text-anchor="middle" x="392.72" y="-207.4" font-family="Times,serif" font-size="14.00" fill="#f0f0f0" style="">IERC20</text>
+</g>
+<g id="clust3" class="cluster" data-name="clusterSafeERC20">
+
+<path fill="#3b4b63" stroke="#e8726d" stroke-dasharray="5,2" d="M316.5,-8C316.5,-8 468.93,-8 468.93,-8 474.93,-8 480.93,-14 480.93,-20 480.93,-20 480.93,-127 480.93,-127 480.93,-133 474.93,-139 468.93,-139 468.93,-139 316.5,-139 316.5,-139 310.5,-139 304.5,-133 304.5,-127 304.5,-127 304.5,-20 304.5,-20 304.5,-14 310.5,-8 316.5,-8" style=""/>
+<text text-anchor="middle" x="392.72" y="-122.4" font-family="Times,serif" font-size="14.00" fill="#f0f0f0" style="">SafeERC20</text>
+</g>
+<g id="clust4" class="cluster" data-name="clusterMINStructs">
+
+<path fill="#3b4b63" stroke="#e8726d" stroke-dasharray="5,2" d="M611.62,-147C611.62,-147 756.57,-147 756.57,-147 762.57,-147 768.57,-153 768.57,-159 768.57,-159 768.57,-212 768.57,-212 768.57,-218 762.57,-224 756.57,-224 756.57,-224 611.62,-224 611.62,-224 605.62,-224 599.62,-218 599.62,-212 599.62,-212 599.62,-159 599.62,-159 599.62,-153 605.62,-147 611.62,-147" style=""/>
+<text text-anchor="middle" x="684.09" y="-207.4" font-family="Times,serif" font-size="14.00" fill="#f0f0f0" style="">MINStructs</text>
+</g>
+<g id="clust5" class="cluster" data-name="cluster_01">
+
+<polygon fill="#2e3e56" stroke="black" points="40.8,-657 40.8,-786 427.72,-786 427.72,-657 40.8,-657" style=""/>
+<text text-anchor="middle" x="234.26" y="-769.4" font-family="Times,serif" font-size="14.00" style="">Legend</text>
+</g>
+<!-- MINPrivateSwap.onlyAfterSaleEnd -->
+<g id="node1" class="node" pointer-events="visible" data-name="MINPrivateSwap.onlyAfterSaleEnd">
+
+<polygon fill="#edad56" stroke="#1bc6a6" stroke-width="3" points="201.14,-586.54 201.14,-601.46 149.98,-612 77.63,-612 26.47,-601.46 26.47,-586.54 77.63,-576 149.98,-576 201.14,-586.54" style=""/>
+<polygon fill="none" stroke="#1bc6a6" stroke-width="3" points="205.13,-583.28 205.13,-604.72 150.38,-616 77.22,-616 22.47,-604.72 22.47,-583.28 77.22,-572 150.38,-572 205.13,-583.28" style=""/>
+<text text-anchor="middle" x="113.8" y="-589.8" font-family="Times,serif" font-size="14.00" style="">onlyAfterSaleEnd</text>
+</g>
+<!-- MINPrivateSwap.onlyBeforeSaleEnd -->
+<g id="node2" class="node" pointer-events="visible" data-name="MINPrivateSwap.onlyBeforeSaleEnd">
+
+<polygon fill="#edad56" stroke="#1bc6a6" stroke-width="3" points="207.41,-524.54 207.41,-539.46 152.58,-550 75.03,-550 20.19,-539.46 20.19,-524.54 75.03,-514 152.58,-514 207.41,-524.54" style=""/>
+<polygon fill="none" stroke="#1bc6a6" stroke-width="3" points="211.4,-521.24 211.4,-542.76 152.95,-554 74.65,-554 16.2,-542.76 16.2,-521.24 74.65,-510 152.95,-510 211.4,-521.24" style=""/>
+<text text-anchor="middle" x="113.8" y="-527.8" font-family="Times,serif" font-size="14.00" style="">onlyBeforeSaleEnd</text>
+</g>
+<!-- MINPrivateSwap.&lt;Constructor&gt; -->
+<g id="node3" class="node" pointer-events="visible" data-name="MINPrivateSwap.&lt;Constructor&gt;">
+
+<ellipse fill="#ff9797" stroke="#ff9797" stroke-width="3" cx="113.8" cy="-474" rx="67.55" ry="18" style=""/>
+<text text-anchor="middle" x="113.8" y="-469.8" font-family="Times,serif" font-size="14.00" style="">&lt;Constructor&gt;</text>
+</g>
+<!-- MINPrivateSwap.deposit -->
+<g id="node4" class="node" pointer-events="visible" data-name="MINPrivateSwap.deposit">
+
+<ellipse fill="#ff9797" stroke="#ff9797" stroke-width="3" cx="113.8" cy="-420" rx="38.86" ry="18" style=""/>
+<text text-anchor="middle" x="113.8" y="-415.8" font-family="Times,serif" font-size="14.00" style="">deposit</text>
+</g>
+<!-- MINPrivateSwap._updateBeneficiaryVestedAmount -->
+<g id="node9" class="node" pointer-events="visible" data-name="MINPrivateSwap._updateBeneficiaryVestedAmount">
+
+<ellipse fill="#edad56" stroke="#edad56" stroke-width="3" cx="392.72" cy="-366" rx="145.23" ry="18" style=""/>
+<text text-anchor="middle" x="392.72" y="-361.8" font-family="Times,serif" font-size="14.00" style="">_updateBeneficiaryVestedAmount</text>
+</g>
+<!-- MINPrivateSwap.deposit&#45;&gt;MINPrivateSwap._updateBeneficiaryVestedAmount -->
+<g id="edge2" class="edge" data-name="MINPrivateSwap.deposit-&gt;MINPrivateSwap._updateBeneficiaryVestedAmount">
+
+<path fill="none" stroke="#1bc6a6" stroke-width="2" d="M151.29,-412.88C188.25,-405.68 246.97,-394.23 297.12,-384.45" style=""/>
+<polygon fill="#1bc6a6" stroke="#1bc6a6" stroke-width="2" points="297.55,-387.93 306.7,-382.58 296.21,-381.06 297.55,-387.93" style=""/>
+</g>
+<!-- IERC20.balanceOf -->
+<g id="node13" class="node" pointer-events="visible" data-name="IERC20.balanceOf">
+
+<ellipse fill="#edad56" stroke="#edad56" stroke-width="3" cx="392.72" cy="-173" rx="50.92" ry="18" style=""/>
+<text text-anchor="middle" x="392.72" y="-168.8" font-family="Times,serif" font-size="14.00" style="">balanceOf</text>
+</g>
+<!-- MINPrivateSwap.deposit&#45;&gt;IERC20.balanceOf -->
+<g id="edge1" class="edge" data-name="MINPrivateSwap.deposit-&gt;IERC20.balanceOf">
+
+<path fill="none" stroke="white" stroke-width="2" d="M153.62,-418.41C173.57,-415.56 196.75,-408.73 211.6,-393 263.14,-338.43 198.65,-284.9 247.6,-228 268.6,-203.6 301.65,-189.98 330.81,-182.41" style=""/>
+<polygon fill="white" stroke="white" stroke-width="2" points="331.58,-185.83 340.5,-180.12 329.97,-179.01 331.58,-185.83" style=""/>
+</g>
+<!-- SafeERC20.safeTransferFrom -->
+<g id="node14" class="node" pointer-events="visible" data-name="SafeERC20.safeTransferFrom">
+
+<ellipse fill="#edad56" stroke="#edad56" stroke-width="3" cx="392.72" cy="-88" rx="80.43" ry="18" style=""/>
+<text text-anchor="middle" x="392.72" y="-83.8" font-family="Times,serif" font-size="14.00" style="">safeTransferFrom</text>
+</g>
+<!-- MINPrivateSwap.deposit&#45;&gt;SafeERC20.safeTransferFrom -->
+<g id="edge3" class="edge" data-name="MINPrivateSwap.deposit-&gt;SafeERC20.safeTransferFrom">
+
+<path fill="none" stroke="white" stroke-width="2" d="M154.08,-418.83C174.16,-416.09 197.32,-409.25 211.6,-393 285.7,-308.67 177.49,-230.67 247.6,-143 263.63,-122.96 287.85,-110.22 311.88,-102.12" style=""/>
+<polygon fill="white" stroke="white" stroke-width="2" points="312.58,-105.56 321.11,-99.28 310.52,-98.87 312.58,-105.56" style=""/>
+</g>
+<!-- MINPrivateSwap.withdraw -->
+<g id="node5" class="node" pointer-events="visible" data-name="MINPrivateSwap.withdraw">
+
+<ellipse fill="#ff9797" stroke="#ff9797" stroke-width="3" cx="113.8" cy="-366" rx="47.52" ry="18" style=""/>
+<text text-anchor="middle" x="113.8" y="-361.8" font-family="Times,serif" font-size="14.00" style="">withdraw</text>
+</g>
+<!-- MINPrivateSwap.withdraw&#45;&gt;MINPrivateSwap._updateBeneficiaryVestedAmount -->
+<g id="edge4" class="edge" data-name="MINPrivateSwap.withdraw-&gt;MINPrivateSwap._updateBeneficiaryVestedAmount">
+
+<path fill="none" stroke="#1bc6a6" stroke-width="2" d="M162.72,-366C182.94,-366 207.75,-366 233.49,-366" style=""/>
+<polygon fill="#1bc6a6" stroke="#1bc6a6" stroke-width="2" points="233.16,-369.5 243.16,-366 233.16,-362.5 233.16,-369.5" style=""/>
+</g>
+<!-- SafeERC20.safeTransfer -->
+<g id="node15" class="node" pointer-events="visible" data-name="SafeERC20.safeTransfer">
+
+<ellipse fill="#edad56" stroke="#edad56" stroke-width="3" cx="392.72" cy="-34" rx="59.08" ry="18" style=""/>
+<text text-anchor="middle" x="392.72" y="-29.8" font-family="Times,serif" font-size="14.00" style="">safeTransfer</text>
+</g>
+<!-- MINPrivateSwap.withdraw&#45;&gt;SafeERC20.safeTransfer -->
+<g id="edge5" class="edge" data-name="MINPrivateSwap.withdraw-&gt;SafeERC20.safeTransfer">
+
+<path fill="none" stroke="white" stroke-width="2" d="M162.33,-363.6C180.29,-360.21 199.32,-353.18 211.6,-339 293.17,-244.83 162.03,-151.55 247.6,-61 266.23,-41.29 294.33,-33.31 320.77,-30.71" style=""/>
+<polygon fill="white" stroke="white" stroke-width="2" points="320.82,-34.21 330.56,-30.04 320.34,-27.23 320.82,-34.21" style=""/>
+</g>
+<!-- MINPrivateSwap.withdrawSwapToken -->
+<g id="node6" class="node" pointer-events="visible" data-name="MINPrivateSwap.withdrawSwapToken">
+
+<ellipse fill="#ff9797" stroke="#ff9797" stroke-width="3" cx="113.8" cy="-258" rx="93.78" ry="18" style=""/>
+<text text-anchor="middle" x="113.8" y="-253.8" font-family="Times,serif" font-size="14.00" style="">withdrawSwapToken</text>
+</g>
+<!-- MINPrivateSwap.withdrawSwapToken&#45;&gt;IERC20.balanceOf -->
+<g id="edge6" class="edge" data-name="MINPrivateSwap.withdrawSwapToken-&gt;IERC20.balanceOf">
+
+<path fill="none" stroke="white" stroke-width="2" d="M167.21,-241.91C216.69,-226.73 290.45,-204.08 339.77,-188.95" style=""/>
+<polygon fill="white" stroke="white" stroke-width="2" points="340.64,-192.34 349.17,-186.06 338.58,-185.65 340.64,-192.34" style=""/>
+</g>
+<!-- MINPrivateSwap.withdrawSwapToken&#45;&gt;SafeERC20.safeTransfer -->
+<g id="edge7" class="edge" data-name="MINPrivateSwap.withdrawSwapToken-&gt;SafeERC20.safeTransfer">
+
+<path fill="none" stroke="white" stroke-width="2" d="M121.77,-238.85C137.45,-198.7 179.52,-105.74 247.6,-61 268.7,-47.13 295.08,-39.96 319.48,-36.37" style=""/>
+<polygon fill="white" stroke="white" stroke-width="2" points="319.91,-39.85 329.4,-35.14 319.05,-32.9 319.91,-39.85" style=""/>
+</g>
+<!-- MINPrivateSwap.withdrawMinToken -->
+<g id="node7" class="node" pointer-events="visible" data-name="MINPrivateSwap.withdrawMinToken">
+
+<ellipse fill="#ff9797" stroke="#ff9797" stroke-width="3" cx="113.8" cy="-312" rx="88.06" ry="18" style=""/>
+<text text-anchor="middle" x="113.8" y="-307.8" font-family="Times,serif" font-size="14.00" style="">withdrawMinToken</text>
+</g>
+<!-- MINPrivateSwap.calculateWithdrawableMinToken -->
+<g id="node8" class="node" pointer-events="visible" data-name="MINPrivateSwap.calculateWithdrawableMinToken">
+
+<ellipse fill="#edad56" stroke="#edad56" stroke-width="3" cx="392.72" cy="-312" rx="140.62" ry="18" style=""/>
+<text text-anchor="middle" x="392.72" y="-307.8" font-family="Times,serif" font-size="14.00" style="">calculateWithdrawableMinToken</text>
+</g>
+<!-- MINPrivateSwap.withdrawMinToken&#45;&gt;MINPrivateSwap.calculateWithdrawableMinToken -->
+<g id="edge8" class="edge" data-name="MINPrivateSwap.withdrawMinToken-&gt;MINPrivateSwap.calculateWithdrawableMinToken">
+
+<path fill="none" stroke="#1bc6a6" stroke-width="2" d="M203.18,-312C214.34,-312 226,-312 237.81,-312" style=""/>
+<polygon fill="#1bc6a6" stroke="#1bc6a6" stroke-width="2" points="237.65,-315.5 247.65,-312 237.65,-308.5 237.65,-315.5" style=""/>
+</g>
+<!-- MINPrivateSwap.getToken -->
+<g id="node10" class="node" pointer-events="visible" data-name="MINPrivateSwap.getToken">
+
+<ellipse fill="#edad56" stroke="#edad56" stroke-width="3" cx="684.09" cy="-293" rx="47.51" ry="18" style=""/>
+<text text-anchor="middle" x="684.09" y="-288.8" font-family="Times,serif" font-size="14.00" style="">getToken</text>
+</g>
+<!-- MINPrivateSwap.withdrawMinToken&#45;&gt;MINPrivateSwap.getToken -->
+<g id="edge10" class="edge" data-name="MINPrivateSwap.withdrawMinToken-&gt;MINPrivateSwap.getToken">
+
+<path fill="none" stroke="#1bc6a6" stroke-width="2" d="M173.25,-297.48C196.26,-292.46 223.02,-287.47 247.6,-285 381.51,-271.53 539.72,-280.65 623.71,-287.47" style=""/>
+<polygon fill="#1bc6a6" stroke="#1bc6a6" stroke-width="2" points="623.27,-290.94 633.52,-288.29 623.85,-283.97 623.27,-290.94" style=""/>
+</g>
+<!-- MINPrivateSwap.withdrawMinToken&#45;&gt;SafeERC20.safeTransfer -->
+<g id="edge9" class="edge" data-name="MINPrivateSwap.withdrawMinToken-&gt;SafeERC20.safeTransfer">
+
+<path fill="none" stroke="white" stroke-width="2" d="M188.29,-301.44C197.09,-297.48 205.21,-292.16 211.6,-285 278.77,-209.8 177.23,-133.22 247.6,-61 266.46,-41.65 294.45,-33.7 320.76,-31.03" style=""/>
+<polygon fill="white" stroke="white" stroke-width="2" points="320.75,-34.54 330.47,-30.33 320.25,-27.56 320.75,-34.54" style=""/>
+</g>
+<!-- MINPrivateSwap.calculateWithdrawableMinToken&#45;&gt;MINPrivateSwap.getToken -->
+<g id="edge11" class="edge" data-name="MINPrivateSwap.calculateWithdrawableMinToken-&gt;MINPrivateSwap.getToken">
+
+<path fill="none" stroke="#1bc6a6" stroke-width="2" d="M521.06,-303.64C556.6,-301.31 593.54,-298.88 623.17,-296.93" style=""/>
+<polygon fill="#1bc6a6" stroke="#1bc6a6" stroke-width="2" points="623.04,-300.45 632.79,-296.3 622.58,-293.47 623.04,-300.45" style=""/>
+</g>
+<!-- MINPrivateSwap._setVestingSchedule -->
+<g id="node11" class="node" pointer-events="visible" data-name="MINPrivateSwap._setVestingSchedule">
+
+<ellipse fill="#edad56" stroke="#edad56" stroke-width="3" cx="684.09" cy="-410" rx="92.06" ry="18" style=""/>
+<text text-anchor="middle" x="684.09" y="-405.8" font-family="Times,serif" font-size="14.00" style="">_setVestingSchedule</text>
+</g>
+<!-- MINPrivateSwap._updateBeneficiaryVestedAmount&#45;&gt;MINPrivateSwap._setVestingSchedule -->
+<g id="edge13" class="edge" data-name="MINPrivateSwap._updateBeneficiaryVestedAmount-&gt;MINPrivateSwap._setVestingSchedule">
+
+<path fill="none" stroke="#1bc6a6" stroke-width="2" d="M489.67,-380.59C523.96,-385.8 562.37,-391.64 595.88,-396.74" style=""/>
+<polygon fill="#1bc6a6" stroke="#1bc6a6" stroke-width="2" points="595.06,-400.15 605.47,-398.2 596.11,-393.23 595.06,-400.15" style=""/>
+</g>
+<!-- MINPrivateSwap._removeVestingSchedule -->
+<g id="node12" class="node" pointer-events="visible" data-name="MINPrivateSwap._removeVestingSchedule">
+
+<ellipse fill="#edad56" stroke="#edad56" stroke-width="3" cx="684.09" cy="-356" rx="110.02" ry="18" style=""/>
+<text text-anchor="middle" x="684.09" y="-351.8" font-family="Times,serif" font-size="14.00" style="">_removeVestingSchedule</text>
+</g>
+<!-- MINPrivateSwap._updateBeneficiaryVestedAmount&#45;&gt;MINPrivateSwap._removeVestingSchedule -->
+<g id="edge14" class="edge" data-name="MINPrivateSwap._updateBeneficiaryVestedAmount-&gt;MINPrivateSwap._removeVestingSchedule">
+
+<path fill="none" stroke="#1bc6a6" stroke-width="2" d="M534.59,-361.13C543.77,-360.81 552.98,-360.5 562.06,-360.18" style=""/>
+<polygon fill="#1bc6a6" stroke="#1bc6a6" stroke-width="2" points="561.89,-363.69 571.76,-359.85 561.65,-356.69 561.89,-363.69" style=""/>
+</g>
+<!-- MINStructs.VestingSchedule -->
+<g id="node16" class="node" pointer-events="visible" data-name="MINStructs.VestingSchedule">
+
+<ellipse fill="#edad56" stroke="#edad56" stroke-width="3" cx="684.09" cy="-173" rx="76.45" ry="18" style=""/>
+<text text-anchor="middle" x="684.09" y="-168.8" font-family="Times,serif" font-size="14.00" style="">VestingSchedule</text>
+</g>
+<!-- MINPrivateSwap._updateBeneficiaryVestedAmount&#45;&gt;MINStructs.VestingSchedule -->
+<g id="edge12" class="edge" data-name="MINPrivateSwap._updateBeneficiaryVestedAmount-&gt;MINStructs.VestingSchedule">
+
+<path fill="none" stroke="white" stroke-width="2" d="M512.75,-354.82C521.85,-350.74 530.38,-345.56 537.83,-339 576.78,-304.76 540.07,-267.36 573.83,-228 586.76,-212.93 604.81,-201.54 622.53,-193.14" style=""/>
+<polygon fill="white" stroke="white" stroke-width="2" points="623.86,-196.38 631.59,-189.14 621.03,-189.97 623.86,-196.38" style=""/>
+</g>
+<!-- key -->
+<g id="node17" class="node" pointer-events="visible" data-name="key">
+
+<polygon fill="#edad56" stroke="none" stroke-width="3" points="178.8,-753 48.8,-753 48.8,-665 178.8,-665 178.8,-753" style=""/>
+<text text-anchor="start" x="98.44" y="-734.4" font-family="Times,serif" font-size="14.00" style="">Internal Call</text>
+<text text-anchor="start" x="94.55" y="-714.4" font-family="Times,serif" font-size="14.00" style="">External Call</text>
+<text text-anchor="start" x="72" y="-694.4" font-family="Times,serif" font-size="14.00" style="">Defined Contract</text>
+<text text-anchor="start" x="58.4" y="-674.4" font-family="Times,serif" font-size="14.00" style="">Undefined Contract</text>
+</g>
+<!-- key2 -->
+<g id="node18" class="node" pointer-events="visible" data-name="key2">
+
+<polygon fill="#edad56" stroke="none" stroke-width="3" points="419.72,-753 365.72,-753 365.72,-665 419.72,-665 419.72,-753" style=""/>
+<text text-anchor="start" x="382.72" y="-734.4" font-family="Times,serif" font-size="14.00" style="">   </text>
+<text text-anchor="start" x="382.72" y="-714.4" font-family="Times,serif" font-size="14.00" style="">   </text>
+<polygon fill="#445773" stroke="none" points="380.72,-689 380.72,-709 405.72,-709 405.72,-689 380.72,-689" style=""/>
+<text text-anchor="start" x="382.72" y="-694.4" font-family="Times,serif" font-size="14.00" style="">   </text>
+<polygon fill="none" stroke="#e8726d" points="382.72,-671 382.72,-687 403.72,-687 403.72,-671 382.72,-671" style=""/>
+</g>
+<!-- key&#45;&gt;key2 -->
+<g id="edge15" class="edge" data-name="key-&gt;key2">
+
+<path fill="none" stroke="#1bc6a6" stroke-width="2" d="M171.8,-739C259.79,-739 284.94,-739 366.91,-739" style=""/>
+<polygon fill="#1bc6a6" stroke="#1bc6a6" stroke-width="2" points="366.69,-742.5 376.69,-739 366.69,-735.5 366.69,-742.5" style=""/>
+</g>
+<!-- key&#45;&gt;key2 -->
+<g id="edge16" class="edge" data-name="key-&gt;key2">
+
+<path fill="none" stroke="white" stroke-width="2" d="M171.8,-719C259.79,-719 284.94,-719 366.91,-719" style=""/>
+<polygon fill="white" stroke="white" stroke-width="2" points="366.69,-722.5 376.69,-719 366.69,-715.5 366.69,-722.5" style=""/>
+</g>
+</g>
+</svg>

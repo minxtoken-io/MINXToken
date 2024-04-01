@@ -1,0 +1,214 @@
+<?xml version="1.0" standalone="no"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="824pt" height="593pt" viewBox="0.00 0.00 824.01 593.00">
+<g id="graph0" class="graph" transform="translate(4,589) scale(1)" data-name="G">
+
+<polygon fill="#2e3e56" stroke="none" points="-4,4 -4,-589 820.01,-589 820.01,4 -4,4" style=""/>
+<g id="clust1" class="cluster" data-name="clusterMINStrategicSale">
+
+<path fill="#445773" stroke="#445773" d="M20,-93C20,-93 796.01,-93 796.01,-93 802.01,-93 808.01,-99 808.01,-105 808.01,-105 808.01,-428 808.01,-428 808.01,-434 802.01,-440 796.01,-440 796.01,-440 20,-440 20,-440 14,-440 8,-434 8,-428 8,-428 8,-105 8,-105 8,-99 14,-93 20,-93" style=""/>
+<text text-anchor="middle" x="408" y="-423.4" font-family="Times,serif" font-size="14.00" fill="#f0f0f0" style="">MINStrategicSale</text>
+</g>
+<g id="clust2" class="cluster" data-name="clusterMINStructs">
+
+<path fill="#3b4b63" stroke="#e8726d" stroke-dasharray="5,2" d="M603.86,-8C603.86,-8 748.81,-8 748.81,-8 754.81,-8 760.81,-14 760.81,-20 760.81,-20 760.81,-73 760.81,-73 760.81,-79 754.81,-85 748.81,-85 748.81,-85 603.86,-85 603.86,-85 597.86,-85 591.86,-79 591.86,-73 591.86,-73 591.86,-20 591.86,-20 591.86,-14 597.86,-8 603.86,-8" style=""/>
+<text text-anchor="middle" x="676.34" y="-68.4" font-family="Times,serif" font-size="14.00" fill="#f0f0f0" style="">MINStructs</text>
+</g>
+<g id="clust3" class="cluster" data-name="clusterSafeERC20">
+
+<path fill="#3b4b63" stroke="#e8726d" stroke-dasharray="5,2" d="M321.08,-8C321.08,-8 431.66,-8 431.66,-8 437.66,-8 443.66,-14 443.66,-20 443.66,-20 443.66,-73 443.66,-73 443.66,-79 437.66,-85 431.66,-85 431.66,-85 321.08,-85 321.08,-85 315.08,-85 309.08,-79 309.08,-73 309.08,-73 309.08,-20 309.08,-20 309.08,-14 315.08,-8 321.08,-8" style=""/>
+<text text-anchor="middle" x="376.37" y="-68.4" font-family="Times,serif" font-size="14.00" fill="#f0f0f0" style="">SafeERC20</text>
+</g>
+<g id="clust4" class="cluster" data-name="cluster_01">
+
+<polygon fill="#2e3e56" stroke="black" points="35.04,-448 35.04,-577 411.37,-577 411.37,-448 35.04,-448" style=""/>
+<text text-anchor="middle" x="223.2" y="-560.4" font-family="Times,serif" font-size="14.00" style="">Legend</text>
+</g>
+<!-- MINStrategicSale.&lt;Constructor&gt; -->
+<g id="node1" class="node" pointer-events="visible" data-name="MINStrategicSale.&lt;Constructor&gt;">
+
+<ellipse fill="#ff9797" stroke="#ff9797" stroke-width="3" cx="108.04" cy="-307" rx="67.55" ry="18" style=""/>
+<text text-anchor="middle" x="108.04" y="-302.8" font-family="Times,serif" font-size="14.00" style="">&lt;Constructor&gt;</text>
+</g>
+<!-- MINStrategicSale.addBeneficiary -->
+<g id="node2" class="node" pointer-events="visible" data-name="MINStrategicSale.addBeneficiary">
+
+<ellipse fill="#ff9797" stroke="#ff9797" stroke-width="3" cx="376.37" cy="-281" rx="70.04" ry="18" style=""/>
+<text text-anchor="middle" x="376.37" y="-276.8" font-family="Times,serif" font-size="14.00" style="">addBeneficiary</text>
+</g>
+<!-- MINStrategicSale.getVestingSchedule -->
+<g id="node5" class="node" pointer-events="visible" data-name="MINStrategicSale.getVestingSchedule">
+
+<ellipse fill="#edad56" stroke="#edad56" stroke-width="3" cx="676.34" cy="-335" rx="88.05" ry="18" style=""/>
+<text text-anchor="middle" x="676.34" y="-330.8" font-family="Times,serif" font-size="14.00" style="">getVestingSchedule</text>
+</g>
+<!-- MINStrategicSale.addBeneficiary&#45;&gt;MINStrategicSale.getVestingSchedule -->
+<g id="edge1" class="edge" data-name="MINStrategicSale.addBeneficiary-&gt;MINStrategicSale.getVestingSchedule">
+
+<path fill="none" stroke="#1bc6a6" stroke-width="2" d="M436.24,-291.67C481.48,-299.87 544.49,-311.29 594.47,-320.34" style=""/>
+<polygon fill="#1bc6a6" stroke="#1bc6a6" stroke-width="2" points="593.76,-323.77 604.23,-322.11 595.01,-316.89 593.76,-323.77" style=""/>
+</g>
+<!-- MINStrategicSale.getToken -->
+<g id="node6" class="node" pointer-events="visible" data-name="MINStrategicSale.getToken">
+
+<ellipse fill="#edad56" stroke="#edad56" stroke-width="3" cx="676.34" cy="-173" rx="47.51" ry="18" style=""/>
+<text text-anchor="middle" x="676.34" y="-168.8" font-family="Times,serif" font-size="14.00" style="">getToken</text>
+</g>
+<!-- MINStrategicSale.addBeneficiary&#45;&gt;MINStrategicSale.getToken -->
+<g id="edge2" class="edge" data-name="MINStrategicSale.addBeneficiary-&gt;MINStrategicSale.getToken">
+
+<path fill="none" stroke="#1bc6a6" stroke-width="2" d="M447.02,-278.29C470.67,-274.68 496.26,-267.58 516.67,-254 540.68,-238.02 528.86,-216.28 552.67,-200 570.85,-187.57 593.79,-180.74 614.9,-177.03" style=""/>
+<polygon fill="#1bc6a6" stroke="#1bc6a6" stroke-width="2" points="615.38,-180.5 624.75,-175.56 614.34,-173.58 615.38,-180.5" style=""/>
+</g>
+<!-- MINStrategicSale.getTotalReservedAmount -->
+<g id="node7" class="node" pointer-events="visible" data-name="MINStrategicSale.getTotalReservedAmount">
+
+<ellipse fill="#edad56" stroke="#edad56" stroke-width="3" cx="676.34" cy="-227" rx="110.6" ry="18" style=""/>
+<text text-anchor="middle" x="676.34" y="-222.8" font-family="Times,serif" font-size="14.00" style="">getTotalReservedAmount</text>
+</g>
+<!-- MINStrategicSale.addBeneficiary&#45;&gt;MINStrategicSale.getTotalReservedAmount -->
+<g id="edge3" class="edge" data-name="MINStrategicSale.addBeneficiary-&gt;MINStrategicSale.getTotalReservedAmount">
+
+<path fill="none" stroke="#1bc6a6" stroke-width="2" d="M436.24,-270.33C478.82,-262.61 537.13,-252.05 585.51,-243.28" style=""/>
+<polygon fill="#1bc6a6" stroke="#1bc6a6" stroke-width="2" points="586.03,-246.74 595.24,-241.52 584.78,-239.85 586.03,-246.74" style=""/>
+</g>
+<!-- MINStrategicSale._setVestingSchedule -->
+<g id="node8" class="node" pointer-events="visible" data-name="MINStrategicSale._setVestingSchedule">
+
+<ellipse fill="#edad56" stroke="#edad56" stroke-width="3" cx="676.34" cy="-389" rx="92.06" ry="18" style=""/>
+<text text-anchor="middle" x="676.34" y="-384.8" font-family="Times,serif" font-size="14.00" style="">_setVestingSchedule</text>
+</g>
+<!-- MINStrategicSale.addBeneficiary&#45;&gt;MINStrategicSale._setVestingSchedule -->
+<g id="edge5" class="edge" data-name="MINStrategicSale.addBeneficiary-&gt;MINStrategicSale._setVestingSchedule">
+
+<path fill="none" stroke="#1bc6a6" stroke-width="2" d="M409.14,-298.23C443.62,-316.32 500.72,-344.51 552.67,-362 565.56,-366.34 579.46,-370.17 593.1,-373.48" style=""/>
+<polygon fill="#1bc6a6" stroke="#1bc6a6" stroke-width="2" points="592.05,-376.83 602.58,-375.69 593.63,-370.01 592.05,-376.83" style=""/>
+</g>
+<!-- MINStrategicSale.addToTotalReservedAmount -->
+<g id="node9" class="node" pointer-events="visible" data-name="MINStrategicSale.addToTotalReservedAmount">
+
+<ellipse fill="#edad56" stroke="#edad56" stroke-width="3" cx="676.34" cy="-281" rx="123.84" ry="18" style=""/>
+<text text-anchor="middle" x="676.34" y="-276.8" font-family="Times,serif" font-size="14.00" style="">addToTotalReservedAmount</text>
+</g>
+<!-- MINStrategicSale.addBeneficiary&#45;&gt;MINStrategicSale.addToTotalReservedAmount -->
+<g id="edge6" class="edge" data-name="MINStrategicSale.addBeneficiary-&gt;MINStrategicSale.addToTotalReservedAmount">
+
+<path fill="none" stroke="#1bc6a6" stroke-width="2" d="M447.61,-281C474.75,-281 506.79,-281 538.13,-281" style=""/>
+<polygon fill="#1bc6a6" stroke="#1bc6a6" stroke-width="2" points="538,-284.5 548,-281 538,-277.5 538,-284.5" style=""/>
+</g>
+<!-- MINStructs.VestingSchedule -->
+<g id="node12" class="node" pointer-events="visible" data-name="MINStructs.VestingSchedule">
+
+<ellipse fill="#edad56" stroke="#edad56" stroke-width="3" cx="676.34" cy="-34" rx="76.45" ry="18" style=""/>
+<text text-anchor="middle" x="676.34" y="-29.8" font-family="Times,serif" font-size="14.00" style="">VestingSchedule</text>
+</g>
+<!-- MINStrategicSale.addBeneficiary&#45;&gt;MINStructs.VestingSchedule -->
+<g id="edge4" class="edge" data-name="MINStrategicSale.addBeneficiary-&gt;MINStructs.VestingSchedule">
+
+<path fill="none" stroke="white" stroke-width="2" d="M447.35,-282.64C472.17,-279.64 498.43,-271.82 516.67,-254 570.36,-201.55 505.35,-147.27 552.67,-89 566.5,-71.97 586.72,-60.02 606.77,-51.73" style=""/>
+<polygon fill="white" stroke="white" stroke-width="2" points="607.9,-55.05 616,-48.22 605.41,-48.5 607.9,-55.05" style=""/>
+</g>
+<!-- MINStrategicSale.withdrawMinTokens -->
+<g id="node3" class="node" pointer-events="visible" data-name="MINStrategicSale.withdrawMinTokens">
+
+<ellipse fill="#ff9797" stroke="#ff9797" stroke-width="3" cx="108.04" cy="-154" rx="92.07" ry="18" style=""/>
+<text text-anchor="middle" x="108.04" y="-149.8" font-family="Times,serif" font-size="14.00" style="">withdrawMinTokens</text>
+</g>
+<!-- MINStrategicSale.computeWithdrawableMintokens -->
+<g id="node4" class="node" pointer-events="visible" data-name="MINStrategicSale.computeWithdrawableMintokens">
+
+<ellipse fill="#edad56" stroke="#edad56" stroke-width="3" cx="376.37" cy="-173" rx="140.09" ry="18" style=""/>
+<text text-anchor="middle" x="376.37" y="-168.8" font-family="Times,serif" font-size="14.00" style="">computeWithdrawableMintokens</text>
+</g>
+<!-- MINStrategicSale.withdrawMinTokens&#45;&gt;MINStrategicSale.computeWithdrawableMintokens -->
+<g id="edge7" class="edge" data-name="MINStrategicSale.withdrawMinTokens-&gt;MINStrategicSale.computeWithdrawableMintokens">
+
+<path fill="none" stroke="#1bc6a6" stroke-width="2" d="M196.61,-160.25C209.85,-161.19 223.76,-162.18 237.74,-163.18" style=""/>
+<polygon fill="#1bc6a6" stroke="#1bc6a6" stroke-width="2" points="237.34,-166.66 247.56,-163.88 237.84,-159.68 237.34,-166.66" style=""/>
+</g>
+<!-- MINStrategicSale.withdrawMinTokens&#45;&gt;MINStrategicSale.getToken -->
+<g id="edge9" class="edge" data-name="MINStrategicSale.withdrawMinTokens-&gt;MINStrategicSale.getToken">
+
+<path fill="none" stroke="#1bc6a6" stroke-width="2" d="M196.47,-147.77C209.73,-147.03 223.26,-146.4 236.07,-146 360.72,-142.08 392.4,-135.5 516.67,-146 551.51,-148.94 590.19,-155.46 620.65,-161.35" style=""/>
+<polygon fill="#1bc6a6" stroke="#1bc6a6" stroke-width="2" points="619.7,-164.73 630.19,-163.24 621.06,-157.87 619.7,-164.73" style=""/>
+</g>
+<!-- MINStrategicSale.owner -->
+<g id="node10" class="node" pointer-events="visible" data-name="MINStrategicSale.owner">
+
+<ellipse fill="#edad56" stroke="#edad56" stroke-width="3" cx="376.37" cy="-227" rx="35.34" ry="18" style=""/>
+<text text-anchor="middle" x="376.37" y="-222.8" font-family="Times,serif" font-size="14.00" style="">owner</text>
+</g>
+<!-- MINStrategicSale.withdrawMinTokens&#45;&gt;MINStrategicSale.owner -->
+<g id="edge10" class="edge" data-name="MINStrategicSale.withdrawMinTokens-&gt;MINStrategicSale.owner">
+
+<path fill="none" stroke="#1bc6a6" stroke-width="2" d="M151.42,-171.23C175.87,-180.69 207.36,-192.07 236.07,-200 266.37,-208.37 301.08,-215.1 328.27,-219.75" style=""/>
+<polygon fill="#1bc6a6" stroke="#1bc6a6" stroke-width="2" points="327.54,-223.18 337.98,-221.37 328.69,-216.27 327.54,-223.18" style=""/>
+</g>
+<!-- SafeERC20.safeTransfer -->
+<g id="node13" class="node" pointer-events="visible" data-name="SafeERC20.safeTransfer">
+
+<ellipse fill="#edad56" stroke="#edad56" stroke-width="3" cx="376.37" cy="-34" rx="59.08" ry="18" style=""/>
+<text text-anchor="middle" x="376.37" y="-29.8" font-family="Times,serif" font-size="14.00" style="">safeTransfer</text>
+</g>
+<!-- MINStrategicSale.withdrawMinTokens&#45;&gt;SafeERC20.safeTransfer -->
+<g id="edge8" class="edge" data-name="MINStrategicSale.withdrawMinTokens-&gt;SafeERC20.safeTransfer">
+
+<path fill="none" stroke="white" stroke-width="2" d="M142.3,-135.86C167.68,-122.29 203.68,-103.64 236.07,-89 264.71,-76.06 297.35,-63.08 323.84,-52.98" style=""/>
+<polygon fill="white" stroke="white" stroke-width="2" points="324.97,-56.29 333.09,-49.48 322.49,-49.74 324.97,-56.29" style=""/>
+</g>
+<!-- MINStrategicSale.computeWithdrawableMintokens&#45;&gt;MINStrategicSale.getToken -->
+<g id="edge11" class="edge" data-name="MINStrategicSale.computeWithdrawableMintokens-&gt;MINStrategicSale.getToken">
+
+<path fill="none" stroke="#1bc6a6" stroke-width="2" d="M517.63,-173C551.77,-173 586.52,-173 614.69,-173" style=""/>
+<polygon fill="#1bc6a6" stroke="#1bc6a6" stroke-width="2" points="614.51,-176.5 624.51,-173 614.51,-169.5 614.51,-176.5" style=""/>
+</g>
+<!-- MINStrategicSale.computeWithdrawableMintokens&#45;&gt;MINStrategicSale.getTotalReservedAmount -->
+<g id="edge12" class="edge" data-name="MINStrategicSale.computeWithdrawableMintokens-&gt;MINStrategicSale.getTotalReservedAmount">
+
+<path fill="none" stroke="#1bc6a6" stroke-width="2" d="M462.36,-188.4C500.92,-195.39 546.55,-203.66 585.66,-210.75" style=""/>
+<polygon fill="#1bc6a6" stroke="#1bc6a6" stroke-width="2" points="584.94,-214.17 595.41,-212.51 586.19,-207.29 584.94,-214.17" style=""/>
+</g>
+<!-- MINStrategicSale.getTotalReleasedAmount -->
+<g id="node11" class="node" pointer-events="visible" data-name="MINStrategicSale.getTotalReleasedAmount">
+
+<ellipse fill="#edad56" stroke="#edad56" stroke-width="3" cx="676.34" cy="-119" rx="109.95" ry="18" style=""/>
+<text text-anchor="middle" x="676.34" y="-114.8" font-family="Times,serif" font-size="14.00" style="">getTotalReleasedAmount</text>
+</g>
+<!-- MINStrategicSale.computeWithdrawableMintokens&#45;&gt;MINStrategicSale.getTotalReleasedAmount -->
+<g id="edge13" class="edge" data-name="MINStrategicSale.computeWithdrawableMintokens-&gt;MINStrategicSale.getTotalReleasedAmount">
+
+<path fill="none" stroke="#1bc6a6" stroke-width="2" d="M462.36,-157.6C501,-150.59 546.73,-142.31 585.9,-135.21" style=""/>
+<polygon fill="#1bc6a6" stroke="#1bc6a6" stroke-width="2" points="586.44,-138.67 595.66,-133.44 585.19,-131.78 586.44,-138.67" style=""/>
+</g>
+<!-- key -->
+<g id="node14" class="node" pointer-events="visible" data-name="key">
+
+<polygon fill="#edad56" stroke="none" stroke-width="3" points="173.04,-544 43.04,-544 43.04,-456 173.04,-456 173.04,-544" style=""/>
+<text text-anchor="start" x="92.67" y="-525.4" font-family="Times,serif" font-size="14.00" style="">Internal Call</text>
+<text text-anchor="start" x="88.78" y="-505.4" font-family="Times,serif" font-size="14.00" style="">External Call</text>
+<text text-anchor="start" x="66.24" y="-485.4" font-family="Times,serif" font-size="14.00" style="">Defined Contract</text>
+<text text-anchor="start" x="52.64" y="-465.4" font-family="Times,serif" font-size="14.00" style="">Undefined Contract</text>
+</g>
+<!-- key2 -->
+<g id="node15" class="node" pointer-events="visible" data-name="key2">
+
+<polygon fill="#edad56" stroke="none" stroke-width="3" points="403.37,-544 349.37,-544 349.37,-456 403.37,-456 403.37,-544" style=""/>
+<text text-anchor="start" x="366.37" y="-525.4" font-family="Times,serif" font-size="14.00" style="">   </text>
+<text text-anchor="start" x="366.37" y="-505.4" font-family="Times,serif" font-size="14.00" style="">   </text>
+<polygon fill="#445773" stroke="none" points="364.37,-480 364.37,-500 389.37,-500 389.37,-480 364.37,-480" style=""/>
+<text text-anchor="start" x="366.37" y="-485.4" font-family="Times,serif" font-size="14.00" style="">   </text>
+<polygon fill="none" stroke="#e8726d" points="366.37,-462 366.37,-478 387.37,-478 387.37,-462 366.37,-462" style=""/>
+</g>
+<!-- key&#45;&gt;key2 -->
+<g id="edge14" class="edge" data-name="key-&gt;key2">
+
+<path fill="none" stroke="#1bc6a6" stroke-width="2" d="M166.04,-530C249.29,-530 273.27,-530 350.5,-530" style=""/>
+<polygon fill="#1bc6a6" stroke="#1bc6a6" stroke-width="2" points="350.34,-533.5 360.34,-530 350.34,-526.5 350.34,-533.5" style=""/>
+</g>
+<!-- key&#45;&gt;key2 -->
+<g id="edge15" class="edge" data-name="key-&gt;key2">
+
+<path fill="none" stroke="white" stroke-width="2" d="M166.04,-510C249.29,-510 273.27,-510 350.5,-510" style=""/>
+<polygon fill="white" stroke="white" stroke-width="2" points="350.34,-513.5 360.34,-510 350.34,-506.5 350.34,-513.5" style=""/>
+</g>
+</g>
+</svg>

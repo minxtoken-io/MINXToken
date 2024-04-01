@@ -1,0 +1,96 @@
+<?xml version="1.0" standalone="no"?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="478pt" height="346pt" viewBox="0.00 0.00 478.43 346.00">
+<g id="graph0" class="graph" transform="translate(4,342) scale(1)" data-name="G">
+
+<polygon fill="#2e3e56" stroke="none" points="-4,4 -4,-342 474.43,-342 474.43,4 -4,4" style=""/>
+<g id="clust1" class="cluster" data-name="clusterMINVesting">
+
+<path fill="#445773" stroke="#445773" d="M20,-8C20,-8 450.43,-8 450.43,-8 456.43,-8 462.43,-14 462.43,-20 462.43,-20 462.43,-181 462.43,-181 462.43,-187 456.43,-193 450.43,-193 450.43,-193 20,-193 20,-193 14,-193 8,-187 8,-181 8,-181 8,-20 8,-20 8,-14 14,-8 20,-8" style=""/>
+<text text-anchor="middle" x="235.22" y="-176.4" font-family="Times,serif" font-size="14.00" fill="#f0f0f0" style="">MINVesting</text>
+</g>
+<g id="clust2" class="cluster" data-name="cluster_01">
+
+<polygon fill="#2e3e56" stroke="black" points="33.42,-201 33.42,-330 378.64,-330 378.64,-201 33.42,-201" style=""/>
+<text text-anchor="middle" x="206.03" y="-313.4" font-family="Times,serif" font-size="14.00" style="">Legend</text>
+</g>
+<!-- MINVesting.&lt;Constructor&gt; -->
+<g id="node1" class="node" pointer-events="visible" data-name="MINVesting.&lt;Constructor&gt;">
+
+<ellipse fill="#ff9797" stroke="#ff9797" stroke-width="3" cx="106.42" cy="-142" rx="67.55" ry="18" style=""/>
+<text text-anchor="middle" x="106.42" y="-137.8" font-family="Times,serif" font-size="14.00" style="">&lt;Constructor&gt;</text>
+</g>
+<!-- MINVesting.addVestingSchedule -->
+<g id="node2" class="node" pointer-events="visible" data-name="MINVesting.addVestingSchedule">
+
+<ellipse fill="#ff9797" stroke="#ff9797" stroke-width="3" cx="106.42" cy="-88" rx="90.34" ry="18" style=""/>
+<text text-anchor="middle" x="106.42" y="-83.8" font-family="Times,serif" font-size="14.00" style="">addVestingSchedule</text>
+</g>
+<!-- MINVesting.getToken -->
+<g id="node3" class="node" pointer-events="visible" data-name="MINVesting.getToken">
+
+<ellipse fill="#edad56" stroke="#edad56" stroke-width="3" cx="343.64" cy="-34" rx="47.51" ry="18" style=""/>
+<text text-anchor="middle" x="343.64" y="-29.8" font-family="Times,serif" font-size="14.00" style="">getToken</text>
+</g>
+<!-- MINVesting.addVestingSchedule&#45;&gt;MINVesting.getToken -->
+<g id="edge1" class="edge" data-name="MINVesting.addVestingSchedule-&gt;MINVesting.getToken">
+
+<path fill="none" stroke="#1bc6a6" stroke-width="2" d="M169.22,-73.81C206.31,-65.3 253.05,-54.57 288.66,-46.39" style=""/>
+<polygon fill="#1bc6a6" stroke="#1bc6a6" stroke-width="2" points="289.32,-49.83 298.28,-44.18 287.75,-43.01 289.32,-49.83" style=""/>
+</g>
+<!-- MINVesting.getTotalReservedAmount -->
+<g id="node4" class="node" pointer-events="visible" data-name="MINVesting.getTotalReservedAmount">
+
+<ellipse fill="#edad56" stroke="#edad56" stroke-width="3" cx="343.64" cy="-88" rx="110.6" ry="18" style=""/>
+<text text-anchor="middle" x="343.64" y="-83.8" font-family="Times,serif" font-size="14.00" style="">getTotalReservedAmount</text>
+</g>
+<!-- MINVesting.addVestingSchedule&#45;&gt;MINVesting.getTotalReservedAmount -->
+<g id="edge2" class="edge" data-name="MINVesting.addVestingSchedule-&gt;MINVesting.getTotalReservedAmount">
+
+<path fill="none" stroke="#1bc6a6" stroke-width="2" d="M198.02,-88C204.81,-88 211.73,-88 218.67,-88" style=""/>
+<polygon fill="#1bc6a6" stroke="#1bc6a6" stroke-width="2" points="218.58,-91.5 228.58,-88 218.58,-84.5 218.58,-91.5" style=""/>
+</g>
+<!-- MINVesting._setVestingSchedule -->
+<g id="node5" class="node" pointer-events="visible" data-name="MINVesting._setVestingSchedule">
+
+<ellipse fill="#edad56" stroke="#edad56" stroke-width="3" cx="343.64" cy="-142" rx="92.06" ry="18" style=""/>
+<text text-anchor="middle" x="343.64" y="-137.8" font-family="Times,serif" font-size="14.00" style="">_setVestingSchedule</text>
+</g>
+<!-- MINVesting.addVestingSchedule&#45;&gt;MINVesting._setVestingSchedule -->
+<g id="edge3" class="edge" data-name="MINVesting.addVestingSchedule-&gt;MINVesting._setVestingSchedule">
+
+<path fill="none" stroke="#1bc6a6" stroke-width="2" d="M169.22,-102.19C199.5,-109.14 236.21,-117.57 268.04,-124.87" style=""/>
+<polygon fill="#1bc6a6" stroke="#1bc6a6" stroke-width="2" points="266.95,-128.22 277.48,-127.04 268.52,-121.39 266.95,-128.22" style=""/>
+</g>
+<!-- key -->
+<g id="node6" class="node" pointer-events="visible" data-name="key">
+
+<polygon fill="#edad56" stroke="none" stroke-width="3" points="171.42,-297 41.42,-297 41.42,-209 171.42,-209 171.42,-297" style=""/>
+<text text-anchor="start" x="91.06" y="-278.4" font-family="Times,serif" font-size="14.00" style="">Internal Call</text>
+<text text-anchor="start" x="87.17" y="-258.4" font-family="Times,serif" font-size="14.00" style="">External Call</text>
+<text text-anchor="start" x="64.62" y="-238.4" font-family="Times,serif" font-size="14.00" style="">Defined Contract</text>
+<text text-anchor="start" x="51.02" y="-218.4" font-family="Times,serif" font-size="14.00" style="">Undefined Contract</text>
+</g>
+<!-- key2 -->
+<g id="node7" class="node" pointer-events="visible" data-name="key2">
+
+<polygon fill="#edad56" stroke="none" stroke-width="3" points="370.64,-297 316.64,-297 316.64,-209 370.64,-209 370.64,-297" style=""/>
+<text text-anchor="start" x="333.64" y="-278.4" font-family="Times,serif" font-size="14.00" style="">   </text>
+<text text-anchor="start" x="333.64" y="-258.4" font-family="Times,serif" font-size="14.00" style="">   </text>
+<polygon fill="#445773" stroke="none" points="331.64,-233 331.64,-253 356.64,-253 356.64,-233 331.64,-233" style=""/>
+<text text-anchor="start" x="333.64" y="-238.4" font-family="Times,serif" font-size="14.00" style="">   </text>
+<polygon fill="none" stroke="#e8726d" points="333.64,-215 333.64,-231 354.64,-231 354.64,-215 333.64,-215" style=""/>
+</g>
+<!-- key&#45;&gt;key2 -->
+<g id="edge4" class="edge" data-name="key-&gt;key2">
+
+<path fill="none" stroke="#1bc6a6" stroke-width="2" d="M164.42,-283C233.82,-283 254.32,-283 317.8,-283" style=""/>
+<polygon fill="#1bc6a6" stroke="#1bc6a6" stroke-width="2" points="317.61,-286.5 327.61,-283 317.61,-279.5 317.61,-286.5" style=""/>
+</g>
+<!-- key&#45;&gt;key2 -->
+<g id="edge5" class="edge" data-name="key-&gt;key2">
+
+<path fill="none" stroke="white" stroke-width="2" d="M164.42,-263C233.82,-263 254.32,-263 317.8,-263" style=""/>
+<polygon fill="white" stroke="white" stroke-width="2" points="317.61,-266.5 327.61,-263 317.61,-259.5 317.61,-266.5" style=""/>
+</g>
+</g>
+</svg>
