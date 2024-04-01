@@ -44,15 +44,11 @@ describe('MINStrategicSale', function () {
   });
 
   it('should allow owner to add beneficiaries', async function () {
-    const balance = await min.balanceOf(deployer.address);
-
     await min.connect(deployer).transfer(minStrategicSale, 1000n * 10n ** 18n);
     await expect(minStrategicSale.connect(deployer).addBeneficiary(anyone, 1000n * 10n ** 18n)).to.not.be.reverted;
   });
 
   it('should not allow owner to add the same beneficiary more than once', async function () {
-    const balance = await min.balanceOf(deployer.address);
-
     await min.connect(deployer).transfer(minStrategicSale, 2000n * 10n ** 18n);
     await expect(minStrategicSale.connect(deployer).addBeneficiary(anyone, 1000n * 10n ** 18n)).to.not.be.reverted;
     await expect(minStrategicSale.connect(deployer).addBeneficiary(anyone, 1000n * 10n ** 18n)).to.be.revertedWith(
@@ -61,8 +57,6 @@ describe('MINStrategicSale', function () {
   });
 
   it('should not allow owner to add a beneficary with 0 amount', async function () {
-    const balance = await min.balanceOf(deployer.address);
-
     await min.connect(deployer).transfer(minStrategicSale, 2000n * 10n ** 18n);
     await expect(minStrategicSale.connect(deployer).addBeneficiary(anyone, 0)).to.be.revertedWith(
       'MINStrategicSale: amount must be greater than 0'
@@ -102,7 +96,6 @@ describe('MINStrategicSale', function () {
 
   it('should not allow owner to withdraw more than non-vested tokens', async function () {
     await min.connect(deployer).transfer(minStrategicSale, 2000n * 10n ** 18n);
-    const withdrawable = await minStrategicSale.connect(anyone).computeWithdrawableMintokens();
     await expect(minStrategicSale.connect(deployer).withdrawMinTokens(3000n * 10n ** 18n)).to.be.revertedWith(
       "MINStrategicSale: cannot withdraw more than beneficiary's total amount"
     );
@@ -110,7 +103,6 @@ describe('MINStrategicSale', function () {
 
   it('should not allow anybody other than owner to withdraw non-vested tokens', async function () {
     await min.connect(deployer).transfer(minStrategicSale, 2000n * 10n ** 18n);
-    const withdrawable = await minStrategicSale.connect(anyone).computeWithdrawableMintokens();
     await expect(minStrategicSale.connect(anyone).withdrawMinTokens(10n * 10n ** 18n)).to.be.revertedWithCustomError(
       minStrategicSale,
       'OwnableUnauthorizedAccount'

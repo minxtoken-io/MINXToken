@@ -72,9 +72,8 @@ contract MINStrategicSale is MINVestingBase {
             releasedAmount: 0
         });
 
-        addToTotalReservedAmount(amount);
-
         _setVestingSchedule(vestingSchedule);
+        addToTotalReservedAmount(amount);
 
         emit BeneficiaryAdded(beneficiary, amount);
     }

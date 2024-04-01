@@ -108,10 +108,6 @@ contract MINPrivateSwap is MINVestingBase {
      */
     function withdrawSwapToken(uint256 amount) public onlyOwner onlyAfterSaleEnd {
         require(amount <= _swapToken.balanceOf(address(this)), "MINPrivateSwap: Insufficient balance");
-        require(
-            (_swapToken.balanceOf(address(this)) * 100) / _ratioMinToSwap <= getToken().balanceOf(address(this)),
-            "MINPrivateSwap: Can't withdraw swap tokens before sufficient MIN tokens are deposited"
-        );
 
         emit OwnerSwapTokenWithdraw(amount);
         SafeERC20.safeTransfer(_swapToken, msg.sender, amount);

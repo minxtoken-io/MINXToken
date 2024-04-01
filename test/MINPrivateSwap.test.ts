@@ -45,7 +45,7 @@ describe('MINPrivateSwap', function () {
         tgePermille: schedule.tgePermille,
         beneficiary: '0x0000000000000000000000000000000000000000',
         cliffDuration: schedule.cliffDuration,
-        slicePeriodSeconds: 600,
+        slicePeriodSeconds: schedule.slicePeriodSeconds,
         startTimestamp: schedule.startTimestamp,
         totalAmount: schedule.totalAmount,
         vestingDuration: schedule.vestingDuration,
@@ -53,6 +53,8 @@ describe('MINPrivateSwap', function () {
       },
       saleDuration
     );
+
+    await min.connect(deployer).transfer(minPrivateSwap, 1500000n * 10n ** 18n);
   });
 
   it('should be able to let users deposit swap token', async function () {
@@ -189,16 +191,6 @@ describe('MINPrivateSwap', function () {
     );
   });
 
-  it('should not let deployer to withdraw swap tokens if mintokens are not loaded after sale end', async function () {
-    const swapTokenAmount = BigInt(10) * 10n ** BigInt(DECIMALS);
-    await swapToken.connect(deployer).approve(minPrivateSwap, swapTokenAmount);
-    await minPrivateSwap.connect(deployer).deposit(swapTokenAmount);
-    await time.increase(300);
-    await expect(minPrivateSwap.connect(deployer).withdrawSwapToken(swapTokenAmount)).to.be.revertedWith(
-      "MINPrivateSwap: Can't withdraw swap tokens before sufficient MIN tokens are deposited"
-    );
-  });
-
   it('should revert withdrawal of swap tokens if transfer fails', async function () {
     const swapTokenAmount = BigInt(10) * 10n ** BigInt(DECIMALS);
     await swapToken.connect(deployer).approve(minPrivateSwap, swapTokenAmount);
@@ -244,7 +236,7 @@ describe('MINPrivateSwap', function () {
     await min.connect(deployer).transfer(minPrivateSwap, BigInt(155) * 10n ** BigInt(DECIMALS));
     await minPrivateSwap.connect(deployer).withdrawSwapToken(swapTokenAmount);
     await expect(
-      minPrivateSwap.connect(deployer).withdrawMinToken(BigInt(6) * 10n ** BigInt(DECIMALS))
+      minPrivateSwap.connect(deployer).withdrawMinToken(BigInt(300_000_000) * 10n ** BigInt(DECIMALS))
     ).to.be.revertedWith('MINPrivateSwap: Not enough MIN tokens to withdraw');
   });
 
