@@ -21,8 +21,6 @@ contract MINPrivateSwap is MINVestingBase {
     using SafeERC20 for IERC20;
 
     IERC20 private immutable _swapToken; // The token to be swapped
-    address[] private _beneficiaries; // List of beneficiaries
-    mapping(address => bool) private _addedToBeneficiaries; // Mapping to check if a beneficiary is added
     uint256 private _totalSwapToken; // The total amount of swap tokens
     mapping(address => uint256) private _swapTokenBalances; // Mapping of swap token balances
     uint256 private immutable _saleEndTime; // The end time of the sale
@@ -69,18 +67,14 @@ contract MINPrivateSwap is MINVestingBase {
             "MINPrivateSwap: not enough MIN tokens to buy for the swap tokens"
         );
         require(amount > 0, "MINPrivateSwap: amount must be greater than 0");
-        if (_swapTokenBalances[msg.sender] == 0 && !_addedToBeneficiaries[msg.sender]) {
-            _beneficiaries.push(msg.sender);
-            _addedToBeneficiaries[msg.sender] = true;
-        }
 
         uint256 swapTokenBalance = _swapTokenBalances[msg.sender];
         _swapTokenBalances[msg.sender] = swapTokenBalance + amount;
         _totalSwapToken += amount;
         _updateBeneficiaryVestedAmount(msg.sender, swapTokenBalance + amount);
 
-        SafeERC20.safeTransferFrom(_swapToken, msg.sender, address(this), amount);
         emit BeneficiaryDeposit(msg.sender, amount);
+        SafeERC20.safeTransferFrom(_swapToken, msg.sender, address(this), amount);
     }
 
     /**
@@ -94,8 +88,8 @@ contract MINPrivateSwap is MINVestingBase {
         _totalSwapToken -= amount;
         _updateBeneficiaryVestedAmount(msg.sender, swapTokenBalance - amount);
 
-        SafeERC20.safeTransfer(_swapToken, msg.sender, amount);
         emit BeneficiaryWithdraw(msg.sender, amount);
+        SafeERC20.safeTransfer(_swapToken, msg.sender, amount);
     }
 
     /**
@@ -109,8 +103,8 @@ contract MINPrivateSwap is MINVestingBase {
             "MINPrivateSwap: Can't withdraw swap tokens before sufficient MIN tokens are deposited"
         );
 
-        SafeERC20.safeTransfer(_swapToken, msg.sender, amount);
         emit OwnerSwapTokenWithdraw(amount);
+        SafeERC20.safeTransfer(_swapToken, msg.sender, amount);
     }
 
     /**
@@ -120,8 +114,8 @@ contract MINPrivateSwap is MINVestingBase {
     function withdrawMinToken(uint256 amount) public onlyOwner onlyAfterSaleEnd {
         require(amount <= calculateWithdrawableMinToken(), "MINPrivateSwap: Not enough MIN tokens to withdraw");
 
-        SafeERC20.safeTransfer(getToken(), msg.sender, amount);
         emit OwnerMinTokenWithdraw(amount);
+        SafeERC20.safeTransfer(getToken(), msg.sender, amount);
     }
 
     /**

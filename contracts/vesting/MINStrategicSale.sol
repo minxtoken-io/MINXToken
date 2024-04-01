@@ -21,9 +21,6 @@ contract MINStrategicSale is MINVestingBase {
     using MINStructs for MINStructs.VestingSchedule;
     using SafeERC20 for IERC20;
 
-    mapping(address => bool) private _addedToBeneficiaries;
-    mapping(address => uint256) private _swapTokenBalances;
-
     MINStructs.VestingSchedule private _strategicSaleVestingSchedule;
 
     /**
@@ -83,8 +80,8 @@ contract MINStrategicSale is MINVestingBase {
             "MINStrategicSale: cannot withdraw more than beneficiary's total amount"
         );
 
-        SafeERC20.safeTransfer(getToken(), owner(), amount);
         emit OwnerMinTokenWithdraw(amount);
+        SafeERC20.safeTransfer(getToken(), owner(), amount);
     }
 
     /**

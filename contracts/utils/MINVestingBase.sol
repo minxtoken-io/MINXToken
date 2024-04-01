@@ -69,8 +69,8 @@ abstract contract MINVestingBase is Ownable {
         vestingSchedule.releasedAmount += amount;
         _totalReleasedAmount += amount;
 
-        SafeERC20.safeTransfer(_token, msg.sender, amount);
         emit TokensReleased(msg.sender, amount);
+        SafeERC20.safeTransfer(_token, msg.sender, amount);
     }
 
     /**
