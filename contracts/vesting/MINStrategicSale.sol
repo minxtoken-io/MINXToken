@@ -24,6 +24,18 @@ contract MINStrategicSale is MINVestingBase {
     MINStructs.VestingSchedule private _strategicSaleVestingSchedule;
 
     /**
+     * @dev Emitted when a beneficiary is added to the strategic sale.
+     * @param beneficiary The address of the beneficiary.
+     * @param amount The amount of tokens allocated to the beneficiary.
+     */
+    event BeneficiaryAdded(address indexed beneficiary, uint256 amount);
+    /**
+     * @dev Emitted when the owner withdraws MIN tokens.
+     * @param amount The amount of tokens withdrawn.
+     */
+    event OwnerMinTokenWithdraw(uint256 amount);
+
+    /**
      * @dev Constructs the MINStrategicSale contract.
      * @param token The MIN token to be sold.
      * @param strategicSaleVestingSchedule The vesting schedule for the strategic sale.
@@ -31,9 +43,6 @@ contract MINStrategicSale is MINVestingBase {
     constructor(IERC20 token, MINStructs.VestingSchedule memory strategicSaleVestingSchedule) MINVestingBase(token) {
         _strategicSaleVestingSchedule = strategicSaleVestingSchedule;
     }
-
-    event BeneficiaryAdded(address indexed beneficiary, uint256 amount);
-    event OwnerMinTokenWithdraw(uint256 amount);
 
     /**
      * @dev Adds a beneficiary to the strategic sale.

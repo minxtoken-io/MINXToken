@@ -28,6 +28,21 @@ contract MINPrivateSwap is MINVestingBase {
     uint256 private immutable _maxMinToken; // The maximum amount of MIN tokens
     MINStructs.VestingSchedule private _privateSaleVestingSchedule; // The vesting schedule for the private sale
 
+    event BeneficiaryDeposit(address indexed beneficiary, uint256 amount);
+    event BeneficiaryWithdraw(address indexed beneficiary, uint256 amount);
+    event OwnerSwapTokenWithdraw(uint256 amount);
+    event OwnerMinTokenWithdraw(uint256 amount);
+
+    modifier onlyAfterSaleEnd() {
+        require(block.timestamp >= _saleEndTime, "MINPrivateSwap: sale is still ongoing");
+        _;
+    }
+
+    modifier onlyBeforeSaleEnd() {
+        require(block.timestamp < _saleEndTime, "MINPrivateSwap: sale has ended");
+        _;
+    }
+
     /**
      * @dev Constructor that initializes the contract.
      * @param minToken The MIN token.
@@ -51,11 +66,6 @@ contract MINPrivateSwap is MINVestingBase {
         _maxMinToken = maxMinToken;
         _privateSaleVestingSchedule = privateSaleVestingSchedule;
     }
-
-    event BeneficiaryDeposit(address indexed beneficiary, uint256 amount);
-    event BeneficiaryWithdraw(address indexed beneficiary, uint256 amount);
-    event OwnerSwapTokenWithdraw(uint256 amount);
-    event OwnerMinTokenWithdraw(uint256 amount);
 
     /**
      * @dev Allows a user to deposit a certain amount of swap tokens.
@@ -147,15 +157,5 @@ contract MINPrivateSwap is MINVestingBase {
         } else {
             _removeVestingSchedule(beneficiary);
         }
-    }
-
-    modifier onlyAfterSaleEnd() {
-        require(block.timestamp >= _saleEndTime, "MINPrivateSwap: sale is still ongoing");
-        _;
-    }
-
-    modifier onlyBeforeSaleEnd() {
-        require(block.timestamp < _saleEndTime, "MINPrivateSwap: sale has ended");
-        _;
     }
 }

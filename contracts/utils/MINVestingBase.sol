@@ -27,15 +27,21 @@ abstract contract MINVestingBase is Ownable {
     IERC20 private immutable _token;
 
     /**
-     * @dev Sets the MIN token and the owner of the contract.
-     * @param token The MIN token.
+     * @dev Emitted when a vesting schedule is set for a beneficiary.
+     * @param beneficiary The address of the beneficiary.
+     * @param vestingSchedule The vesting schedule that was set.
      */
-    constructor(IERC20 token) Ownable(msg.sender) {
-        _token = token;
-    }
-
     event VestingScheduleSet(address indexed beneficiary, MINStructs.VestingSchedule vestingSchedule);
+    /**
+     * @dev Emitted when tokens are released to a beneficiary.
+     * @param beneficiary The address of the beneficiary.
+     * @param amount The amount of tokens released.
+     */
     event TokensReleased(address indexed beneficiary, uint256 amount);
+    /**
+     * @dev Emitted when the total reserved amount is updated.
+     * @param amount The new total reserved amount.
+     */
     event TotalReservedAmountUpdated(uint256 amount);
 
     /**
@@ -44,6 +50,14 @@ abstract contract MINVestingBase is Ownable {
     modifier onlyBeneficiary() {
         require(_vestingSchedules[msg.sender].beneficiary == msg.sender, "MINVesting: caller is not a beneficiary");
         _;
+    }
+
+    /**
+     * @dev Sets the MIN token and the owner of the contract.
+     * @param token The MIN token.
+     */
+    constructor(IERC20 token) Ownable(msg.sender) {
+        _token = token;
     }
 
     /**
@@ -112,23 +126,6 @@ abstract contract MINVestingBase is Ownable {
     }
 
     /**
-     * @dev Returns the current time.
-     * @return The current timestamp in seconds.
-     */
-    function getCurrentTime() internal view virtual returns (uint256) {
-        return block.timestamp;
-    }
-
-    /**
-     * @dev Updates the total reserved amount.
-     * @param amount The amount of tokens allocated to a beneficiary.
-     */
-    function addToTotalReservedAmount(uint256 amount) internal {
-        _totalReservedAmount += amount;
-        emit TotalReservedAmountUpdated(_totalReservedAmount);
-    }
-
-    /**
      * @dev Returns the total amount of tokens that have been released.
      * @return The total amount of tokens that have been released.
      */
@@ -151,6 +148,15 @@ abstract contract MINVestingBase is Ownable {
      */
     function getToken() public view returns (IERC20) {
         return _token;
+    }
+
+    /**
+     * @dev Returns the vesting schedule for a beneficiary.
+     * @param beneficiary The address of the beneficiary.
+     * @return The vesting schedule of the beneficiary.
+     */
+    function getVestingSchedule(address beneficiary) public view returns (MINStructs.VestingSchedule memory) {
+        return _vestingSchedules[beneficiary];
     }
 
     /**
@@ -180,11 +186,19 @@ abstract contract MINVestingBase is Ownable {
     }
 
     /**
-     * @dev Returns the vesting schedule for a beneficiary.
-     * @param beneficiary The address of the beneficiary.
-     * @return The vesting schedule of the beneficiary.
+     * @dev Updates the total reserved amount.
+     * @param amount The amount of tokens allocated to a beneficiary.
      */
-    function getVestingSchedule(address beneficiary) public view returns (MINStructs.VestingSchedule memory) {
-        return _vestingSchedules[beneficiary];
+    function addToTotalReservedAmount(uint256 amount) internal {
+        _totalReservedAmount += amount;
+        emit TotalReservedAmountUpdated(_totalReservedAmount);
+    }
+
+    /**
+     * @dev Returns the current time.
+     * @return The current timestamp in seconds.
+     */
+    function getCurrentTime() internal view virtual returns (uint256) {
+        return block.timestamp;
     }
 }
