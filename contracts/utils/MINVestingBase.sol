@@ -94,7 +94,7 @@ abstract contract MINVestingBase is Ownable {
     function computeReleasableAmount(address beneficiary) public view virtual returns (uint256) {
         require(_vestingSchedules[beneficiary].beneficiary == beneficiary, "MINVesting: beneficiary not found");
         MINStructs.VestingSchedule storage vestingSchedule = _vestingSchedules[beneficiary];
-        uint256 currentTime = getCurrentTime();
+        uint256 currentTime = block.timestamp;
         uint256 releasable = 0;
         uint256 tgeAmount = 0;
         //calculate tge, if tge is zero, then no tokens are due
@@ -191,13 +191,5 @@ abstract contract MINVestingBase is Ownable {
     function addToTotalReservedAmount(uint256 amount) internal {
         _totalReservedAmount += amount;
         emit TotalReservedAmountUpdated(_totalReservedAmount);
-    }
-
-    /**
-     * @dev Returns the current time.
-     * @return The current timestamp in seconds.
-     */
-    function getCurrentTime() internal view virtual returns (uint256) {
-        return block.timestamp;
     }
 }

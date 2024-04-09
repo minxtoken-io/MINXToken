@@ -338,20 +338,6 @@ _Updates the total reserved amount._
 | ------ | ------- | ------------------------------------------------ |
 | amount | uint256 | The amount of tokens allocated to a beneficiary. |
 
-### getCurrentTime
-
-```solidity
-function getCurrentTime() internal view virtual returns (uint256)
-```
-
-_Returns the current time._
-
-#### Return Values
-
-| Name | Type    | Description                       |
-| ---- | ------- | --------------------------------- |
-| [0]  | uint256 | The current timestamp in seconds. |
-
 ## MINPrivateSwap
 
 ### BeneficiaryDeposit
