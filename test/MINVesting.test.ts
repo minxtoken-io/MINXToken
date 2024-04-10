@@ -37,6 +37,12 @@ describe('MINVesting', function () {
       params: [],
     });
   });
+
+  it('should not be able to deploy with zero address token', async function () {
+    deployer = await ethers.provider.getSigner(0);
+    const factory = new MINVesting__factory(deployer);
+    await expect(factory.deploy('0x' + '0'.repeat(40))).to.be.revertedWith('MINVesting: token address cannot be zero');
+  });
   beforeEach(async function () {
     deployer = await ethers.provider.getSigner(0);
     nonOwner = await ethers.provider.getSigner(1);
@@ -183,6 +189,12 @@ describe('MINVesting', function () {
       );
     });
 
+    it('should not compute if beneficiary is 0 address', async function () {
+      await expect(vesting.computeReleasableAmount('0x' + '0'.repeat(40))).to.be.revertedWith(
+        'MINVesting: beneficiary address cannot be zero'
+      );
+    });
+
     it('should not allow release of tokens more than releasable', async function () {
       const strategic = VESTING_SCHEDULES.strategic;
       const beneficiary = await impersonate(strategic.beneficiary);
@@ -241,8 +253,14 @@ describe('MINVesting', function () {
     it('should return the vesting schedule of a beneficiary', async function () {
       //testing with private because it has no tge
       const beneficiary = await impersonate(VESTING_SCHEDULES.private.beneficiary);
-      const schedule = await vesting.getVestingScheduleForBeneficiary(beneficiary.address);
+      const schedule = await vesting.getVestingSchedule(beneficiary.address);
       expect(schedule.beneficiary).to.be.equal(beneficiary);
+    });
+
+    it('should not return the vesting scheudle of 0 address', async function () {
+      await expect(vesting.getVestingSchedule('0x' + '0'.repeat(40))).to.be.revertedWith(
+        'MINVesting: beneficiary address cannot be zero'
+      );
     });
   });
 });

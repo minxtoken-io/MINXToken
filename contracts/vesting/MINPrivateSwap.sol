@@ -78,6 +78,7 @@ contract MINPrivateSwap is MINVestingBase {
         MINStructs.VestingSchedule memory privateSaleVestingSchedule,
         uint256 saleDuration
     ) MINVestingBase(minToken) {
+        require(address(swapToken) != address(0), "MINPrivateSwap: swap token address cannot be 0");
         _swapToken = swapToken;
         _saleEndTime = block.timestamp + saleDuration;
         _ratioMinToSwap = ratioMinToSwap;

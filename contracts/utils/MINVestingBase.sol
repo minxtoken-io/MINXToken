@@ -56,18 +56,8 @@ abstract contract MINVestingBase is Ownable {
      * @param token The MIN token.
      */
     constructor(IERC20 token) Ownable(msg.sender) {
+        require(address(token) != address(0), "MINVesting: token address cannot be zero");
         _token = token;
-    }
-
-    /**
-     * @dev Returns the vesting schedule for a beneficiary.
-     * @param beneficiary The address of the beneficiary.
-     * @return The vesting schedule of the beneficiary.
-     */
-    function getVestingScheduleForBeneficiary(
-        address beneficiary
-    ) public view returns (MINStructs.VestingSchedule memory) {
-        return _vestingSchedules[beneficiary];
     }
 
     /**
@@ -92,6 +82,7 @@ abstract contract MINVestingBase is Ownable {
      * @return The amount of tokens that can be released.
      */
     function computeReleasableAmount(address beneficiary) public view virtual returns (uint256) {
+        require(beneficiary != address(0), "MINVesting: beneficiary address cannot be zero");
         require(_vestingSchedules[beneficiary].beneficiary == beneficiary, "MINVesting: beneficiary not found");
         MINStructs.VestingSchedule storage vestingSchedule = _vestingSchedules[beneficiary];
         uint256 currentTime = block.timestamp;
@@ -155,6 +146,7 @@ abstract contract MINVestingBase is Ownable {
      * @return The vesting schedule of the beneficiary.
      */
     function getVestingSchedule(address beneficiary) public view returns (MINStructs.VestingSchedule memory) {
+        require(beneficiary != address(0), "MINVesting: beneficiary address cannot be zero");
         return _vestingSchedules[beneficiary];
     }
 
@@ -181,6 +173,7 @@ abstract contract MINVestingBase is Ownable {
      * @param beneficiary The address of the beneficiary.
      */
     function _removeVestingSchedule(address beneficiary) internal {
+        //since the beneficiary address comes from msg.sender in _updateBeneficiaryVestedAmount, no need to check if it is zero
         delete _vestingSchedules[beneficiary];
     }
 

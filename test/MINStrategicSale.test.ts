@@ -63,6 +63,13 @@ describe('MINStrategicSale', function () {
     );
   });
 
+  it('shouldot allow owner to add a beneficiary with 0 address', async function () {
+    await min.connect(deployer).transfer(minStrategicSale, 2000n * 10n ** 18n);
+    await expect(
+      minStrategicSale.connect(deployer).addBeneficiary('0x' + '0'.repeat(40), 1000n * 10n ** 18n)
+    ).to.be.revertedWith('MINStrategicSale: beneficiary address cannot be 0');
+  });
+
   it('should not allow owner to add a beneficary with more amount than contract', async function () {
     await min.connect(deployer).transfer(minStrategicSale, 2000n * 10n ** 18n);
     await expect(minStrategicSale.connect(deployer).addBeneficiary(anyone, 2001n * 10n ** 18n)).to.be.revertedWith(

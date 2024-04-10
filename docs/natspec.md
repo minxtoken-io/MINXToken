@@ -180,26 +180,6 @@ _Sets the MIN token and the owner of the contract._
 | ----- | --------------- | -------------- |
 | token | contract IERC20 | The MIN token. |
 
-### getVestingScheduleForBeneficiary
-
-```solidity
-function getVestingScheduleForBeneficiary(address beneficiary) public view returns (struct MINStructs.VestingSchedule)
-```
-
-_Returns the vesting schedule for a beneficiary._
-
-#### Parameters
-
-| Name        | Type    | Description                     |
-| ----------- | ------- | ------------------------------- |
-| beneficiary | address | The address of the beneficiary. |
-
-#### Return Values
-
-| Name | Type                              | Description                              |
-| ---- | --------------------------------- | ---------------------------------------- |
-| [0]  | struct MINStructs.VestingSchedule | The vesting schedule of the beneficiary. |
-
 ### release
 
 ```solidity
@@ -346,11 +326,29 @@ _Updates the total reserved amount._
 event BeneficiaryDeposit(address beneficiary, uint256 amount)
 ```
 
+_Emitted when a beneficiary deposits swap tokens._
+
+#### Parameters
+
+| Name        | Type    | Description                          |
+| ----------- | ------- | ------------------------------------ |
+| beneficiary | address | The beneficiary address.             |
+| amount      | uint256 | The amount of swap tokens deposited. |
+
 ### BeneficiaryWithdraw
 
 ```solidity
 event BeneficiaryWithdraw(address beneficiary, uint256 amount)
 ```
+
+_Emitted when a beneficiary withdraws swap tokens._
+
+#### Parameters
+
+| Name        | Type    | Description                          |
+| ----------- | ------- | ------------------------------------ |
+| beneficiary | address | The beneficiary address.             |
+| amount      | uint256 | The amount of swap tokens withdrawn. |
 
 ### OwnerSwapTokenWithdraw
 
@@ -358,11 +356,27 @@ event BeneficiaryWithdraw(address beneficiary, uint256 amount)
 event OwnerSwapTokenWithdraw(uint256 amount)
 ```
 
+_Emitted when the owner withdraws swap tokens._
+
+#### Parameters
+
+| Name   | Type    | Description                          |
+| ------ | ------- | ------------------------------------ |
+| amount | uint256 | The amount of swap tokens withdrawn. |
+
 ### OwnerMinTokenWithdraw
 
 ```solidity
 event OwnerMinTokenWithdraw(uint256 amount)
 ```
+
+_Emitted when the owner withdraws MIN tokens._
+
+#### Parameters
+
+| Name   | Type    | Description                         |
+| ------ | ------- | ----------------------------------- |
+| amount | uint256 | The amount of MIN tokens withdrawn. |
 
 ### onlyAfterSaleEnd
 

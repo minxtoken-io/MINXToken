@@ -50,6 +50,7 @@ contract MINStrategicSale is MINVestingBase {
      * @param amount The amount of tokens allocated to the beneficiary.
      */
     function addBeneficiary(address beneficiary, uint256 amount) public onlyOwner {
+        require(beneficiary != address(0), "MINStrategicSale: beneficiary address cannot be 0");
         require(
             getVestingSchedule(beneficiary).beneficiary == address(0),
             "MINStrategicSale: beneficiary already exists"
