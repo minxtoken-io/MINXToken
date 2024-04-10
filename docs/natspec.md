@@ -217,7 +217,7 @@ _Computes the amount of tokens that can be released to a beneficiary._
 ### getTotalReleasedAmount
 
 ```solidity
-function getTotalReleasedAmount() public view returns (uint256)
+function getTotalReleasedAmount() internal view returns (uint256)
 ```
 
 _Returns the total amount of tokens that have been released._
@@ -231,7 +231,7 @@ _Returns the total amount of tokens that have been released._
 ### getTotalReservedAmount
 
 ```solidity
-function getTotalReservedAmount() public view returns (uint256)
+function getTotalReservedAmount() internal view returns (uint256)
 ```
 
 _Returns the total amount of tokens that have been reserved._

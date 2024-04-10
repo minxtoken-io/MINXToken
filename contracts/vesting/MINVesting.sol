@@ -32,5 +32,6 @@ contract MINVesting is MINVestingBase {
         );
 
         _setVestingSchedule(vestingSchedule);
+        addToTotalReservedAmount(vestingSchedule.totalAmount);
     }
 }

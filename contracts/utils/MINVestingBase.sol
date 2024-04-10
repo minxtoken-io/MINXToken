@@ -120,7 +120,7 @@ abstract contract MINVestingBase is Ownable {
      * @return The total amount of tokens that have been released.
      */
 
-    function getTotalReleasedAmount() public view returns (uint256) {
+    function getTotalReleasedAmount() internal view returns (uint256) {
         return _totalReleasedAmount;
     }
 
@@ -128,7 +128,7 @@ abstract contract MINVestingBase is Ownable {
      * @dev Returns the total amount of tokens that have been reserved.
      * @return The total amount of tokens that have been reserved.
      */
-    function getTotalReservedAmount() public view returns (uint256) {
+    function getTotalReservedAmount() internal view returns (uint256) {
         return _totalReservedAmount;
     }
 
