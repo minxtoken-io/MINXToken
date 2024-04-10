@@ -20,9 +20,10 @@ let swapToken: MockToken;
 let minPrivateSwap: MINPrivateSwap;
 const AMOUNT = 300_000_000;
 const DECIMALS = 18;
+require('events').EventEmitter.defaultMaxListeners = 512;
 describe('MINPrivateSwap', function () {
   // should be able to deploy
-  this.beforeAll(async function () {
+  beforeEach(async function () {
     await network.provider.request({
       method: 'hardhat_reset',
       params: [],

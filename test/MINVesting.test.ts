@@ -29,9 +29,10 @@ const impersonate = async (address: string) => {
 
   return ethers.provider.getSigner(address);
 };
+require('events').EventEmitter.defaultMaxListeners = 512;
 
 describe('MINVesting', function () {
-  this.beforeAll(async function () {
+  beforeEach(async function () {
     await network.provider.request({
       method: 'hardhat_reset',
       params: [],
@@ -130,6 +131,23 @@ describe('MINVesting', function () {
       vesting,
       'OwnableUnauthorizedAccount'
     );
+  });
+
+  it('should not allow creating a schedule that has already been finished', async function () {
+    await token.connect(deployer).transfer(vesting, 300_000_000n * 10n ** 18n);
+
+    await expect(
+      vesting.connect(deployer).addVestingSchedule({
+        tgePermille: 0,
+        beneficiary: deployer.address,
+        startTimestamp: Math.floor(Date.now() / 1000) - MONTH * 3,
+        cliffDuration: MONTH,
+        vestingDuration: MONTH,
+        slicePeriodSeconds: MONTH,
+        totalAmount: 100n * 10n ** 18n,
+        releasedAmount: 0,
+      })
+    ).to.be.revertedWith("MINVesting: can't create an already expired vesting schedule");
   });
 
   describe('With correct vesting setup', function () {

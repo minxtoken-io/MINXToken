@@ -18,8 +18,9 @@ let anyone: SignerWithAddress;
 let minStrategicSale: MINStrategicSale;
 const AMOUNT = 300_000_000;
 const DECIMALS = 18;
+require('events').EventEmitter.defaultMaxListeners = 512;
 describe('MINStrategicSale', function () {
-  this.beforeAll(async function () {
+  beforeEach(async function () {
     await network.provider.request({
       method: 'hardhat_reset',
       params: [],

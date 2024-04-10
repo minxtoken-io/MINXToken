@@ -163,6 +163,11 @@ abstract contract MINVestingBase is Ownable {
                 vestingSchedule.slicePeriodSeconds <= vestingSchedule.vestingDuration,
             "MINVesting: vesting duration must be greater than zero and slice period"
         );
+        require(
+            vestingSchedule.startTimestamp + vestingSchedule.cliffDuration + vestingSchedule.vestingDuration >
+                block.timestamp,
+            "MINVesting: can't create an already expired vesting schedule"
+        );
 
         _vestingSchedules[vestingSchedule.beneficiary] = vestingSchedule;
         emit VestingScheduleSet(vestingSchedule.beneficiary, vestingSchedule);
