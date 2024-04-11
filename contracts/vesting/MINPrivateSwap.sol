@@ -79,6 +79,10 @@ contract MINPrivateSwap is MINVestingBase {
         uint256 saleDuration
     ) MINVestingBase(minToken) {
         require(address(swapToken) != address(0), "MINPrivateSwap: swap token address cannot be 0");
+        require(
+            block.timestamp + saleDuration <= privateSaleVestingSchedule.startTimestamp,
+            "MINPrivateSwap: sale must end before cliff and vesting starts"
+        );
         _swapToken = swapToken;
         _saleEndTime = block.timestamp + saleDuration;
         _ratioMinToSwap = ratioMinToSwap;

@@ -60,6 +60,35 @@ describe('MINPrivateSwap', function () {
     ).to.be.revertedWith('MINPrivateSwap: swap token address cannot be 0');
   });
 
+  it("should not deploy if sale doesn't end before vesting starts", async function () {
+    deployer = await ethers.provider.getSigner(0);
+
+    min = await new MockToken__factory(deployer).deploy(AMOUNT);
+    swapToken = await new MockToken__factory(deployer).deploy(AMOUNT);
+    const schedule = VESTING_SCHEDULES.private;
+    const saleDuration = Math.floor((schedule.startTimestamp - Math.floor(Date.now() / 1000)) * 2);
+    const factory = await new MINPrivateSwap__factory(deployer);
+    await expect(
+      factory.deploy(
+        min,
+        swapToken,
+        30,
+        1500000n * 10n ** 18n,
+        {
+          tgePermille: schedule.tgePermille,
+          beneficiary: '0x0000000000000000000000000000000000000000',
+          cliffDuration: schedule.cliffDuration,
+          slicePeriodSeconds: schedule.slicePeriodSeconds,
+          startTimestamp: schedule.startTimestamp,
+          totalAmount: schedule.totalAmount,
+          vestingDuration: schedule.vestingDuration,
+          releasedAmount: schedule.releasedAmount,
+        },
+        saleDuration
+      )
+    ).to.be.revertedWith('MINPrivateSwap: sale must end before cliff and vesting starts');
+  });
+
   beforeEach('should be deployed', async function () {
     deployer = await ethers.provider.getSigner(0);
     anyone = await ethers.provider.getSigner(1);
