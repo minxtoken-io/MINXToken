@@ -58,7 +58,7 @@ contract MINStrategicSale is MINVestingBase {
 
         require(amount > 0, "MINStrategicSale: amount must be greater than 0");
         require(
-            amount <= getToken().balanceOf(address(this)) - getTotalReservedAmount(),
+            amount <= computeWithdrawableMintokens(),
             "MINStrategicSale: amount must be less than or equal to contract balance"
         );
 
