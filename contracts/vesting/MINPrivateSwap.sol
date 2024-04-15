@@ -96,7 +96,7 @@ contract MINPrivateSwap is MINVestingBase {
      */
     function deposit(uint256 amount) public onlyBeforeSaleEnd {
         require(
-            (((_swapToken.balanceOf(address(this)) + amount) * 100) / _ratioMinToSwap) <= _maxMinToken,
+            (((_totalSwapToken + amount) * 100) / _ratioMinToSwap) <= _maxMinToken,
             "MINPrivateSwap: not enough MIN tokens to buy for the swap tokens"
         );
         require(amount > 0, "MINPrivateSwap: amount must be greater than 0");
