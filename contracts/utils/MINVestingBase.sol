@@ -94,7 +94,7 @@ abstract contract MINVestingBase is Ownable {
             releasable += tgeAmount;
         }
         if (currentTime < vestingSchedule.startTimestamp + vestingSchedule.cliffDuration) {
-            return releasable;
+            return releasable - vestingSchedule.releasedAmount;
         } else if (
             currentTime >=
             vestingSchedule.startTimestamp + vestingSchedule.cliffDuration + vestingSchedule.vestingDuration
@@ -110,7 +110,8 @@ abstract contract MINVestingBase is Ownable {
             uint256 vestedAmount = ((vestingSchedule.totalAmount - tgeAmount) * vestedSeconds) /
                 vestingSchedule.vestingDuration;
             // Subtract the amount already released and return.
-            releasable += vestedAmount - vestingSchedule.releasedAmount;
+            releasable += vestedAmount;
+            releasable -= vestingSchedule.releasedAmount;
         }
         return releasable;
     }
