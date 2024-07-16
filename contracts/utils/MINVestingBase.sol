@@ -93,6 +93,9 @@ abstract contract MINVestingBase is Ownable {
             tgeAmount = (vestingSchedule.totalAmount * vestingSchedule.tgePermille) / 1000;
             releasable += tgeAmount;
         }
+        if (currentTime < vestingSchedule.startTimestamp) {
+            return 0;
+        } else
         if (currentTime < vestingSchedule.startTimestamp + vestingSchedule.cliffDuration) {
             return releasable - vestingSchedule.releasedAmount;
         } else if (
