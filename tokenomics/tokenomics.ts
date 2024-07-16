@@ -1,4 +1,4 @@
-const START_DATE = Math.floor(new Date('May 1 2024 00:00:00 GMT+0300').getTime() / 1000);
+const START_DATE = Math.floor(Date.now() / 1000);
 const MONTH = 60 * 60 * 24 * 30;
 
 const WALLETS = {
@@ -27,7 +27,7 @@ const VESTING_SCHEDULES = {
   private: {
     tgePermille: 0,
     beneficiary: WALLETS.private,
-    startTimestamp: START_DATE,
+    startTimestamp: START_DATE + MONTH,
     cliffDuration: 4 * MONTH,
     vestingDuration: 12 * MONTH,
     slicePeriodSeconds: MONTH,
