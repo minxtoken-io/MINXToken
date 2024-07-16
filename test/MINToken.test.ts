@@ -16,10 +16,10 @@ describe('MINToken', function () {
     min = await new MINToken__factory(deployer).deploy(AMOUNT);
   });
   it('should have the correct name', async function () {
-    expect(await min.name()).to.equal('MIN Token');
+    expect(await min.name()).to.equal('Modern Innovation Network Token');
   });
   it('should have the correct symbol', async function () {
-    expect(await min.symbol()).to.equal('MIN');
+    expect(await min.symbol()).to.equal('MINX');
   });
   it('should have the correct decimals', async function () {
     expect(await min.decimals()).to.equal(DECIMALS);

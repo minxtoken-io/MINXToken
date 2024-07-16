@@ -15,7 +15,7 @@ contract MINToken is ERC20 {
      * @param amountToMint The amount of token that'll be minted.
      * This value is multiplied by 10 to the power of the number of decimals the token has.
      */
-    constructor(uint256 amountToMint) ERC20("MIN Token", "MIN") {
+    constructor(uint256 amountToMint) ERC20("Modern Innovation Network Token", "MINX") {
         _mint(msg.sender, amountToMint * 10 ** decimals());
     }
 }
