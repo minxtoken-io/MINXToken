@@ -11,7 +11,7 @@ import {
 } from '../typechain';
 import {MINStructs} from '../typechain/contracts/vesting/MINVesting';
 import {SignerWithAddress} from '@nomicfoundation/hardhat-ethers/signers';
-import {VESTING_SCHEDULES} from '../tokenomics/tokenomics';
+import {VESTING_SCHEDULES} from '../tokenomics/old-tokenomics';
 let deployer: SignerWithAddress;
 let nonOwner: SignerWithAddress;
 let token: MINToken;

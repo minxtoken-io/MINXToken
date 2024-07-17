@@ -1,0 +1,50 @@
+{
+    "public": {
+        "cliff": 0,
+        "tge": 5,
+        "vesting": 19,
+        "amount": 6000000
+    },
+    "operations": {
+        "cliff": 0,
+        "tge": 0,
+        "vesting": 30,
+        "amount": 3000000
+    },
+    "devTeam": {
+        "cliff": 0,
+        "tge": 2,
+        "vesting": 25,
+        "amount": 5000000
+    },
+    "reserve": {
+        "cliff": 24,
+        "tge": 0,
+        "vesting": 20,
+        "amount": 2000000
+    },
+    "marketing": {
+        "cliff": 0,
+        "tge": 0,
+        "vesting": 20,
+        "amount": 2000000
+    },
+    "liquidity": {
+        "cliff": 0,
+        "tge": 30,
+        "vesting": 7,
+        "amount": 3220531.12
+    },
+    "strategic": {
+        "cliff": 2,
+        "tge": 10,
+        "vesting": 18,
+        "amount": 7242898.88
+    },
+    "team": {
+        "cliff": 6,
+        "tge": 0,
+        "vesting": 20,
+        "amount": 6536570.0
+    }
+}
