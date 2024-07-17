@@ -6,7 +6,7 @@ async function main() {
   const [deployer] = await ethers.getSigners();
   console.log('Network:', (await ethers.provider.getNetwork()).name);
   console.log('Deploy contracts');
-  const minTokenContract = await new MINToken__factory(deployer).deploy(300_000_000n);
+  const minTokenContract = await new MINToken__factory(deployer).deploy(35_000_000n);
   console.log("Waiting for deployment transaction to be mined...")
   await minTokenContract.waitForDeployment();
   const minTokenAddress = await minTokenContract.getAddress();
