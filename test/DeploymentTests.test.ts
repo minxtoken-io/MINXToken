@@ -42,7 +42,7 @@ describe('DeploymentTests', async function () {
   this.beforeAll('MINX token should be deployed', async function () {
     console.log('Deploying MINX token');
     deployer = await ethers.provider.getSigner(0);
-    minToken = await new MINToken__factory(deployer).deploy(300_000_000);
+    minToken = await new MINToken__factory(deployer).deploy(35_000_000);
     minTokenAddress = await minToken.getAddress();
     
   });
@@ -57,11 +57,11 @@ describe('DeploymentTests', async function () {
       expect(await minToken.decimals()).to.equal(18);
     });
     it('should have the correct total supply', async function () {
-      expect(await minToken.totalSupply()).to.equal(300_000_000n * 10n ** 18n);
+      expect(await minToken.totalSupply()).to.equal(35_000_000n * 10n ** 18n);
     });
     it('should send all the balance to the deployer', async function () {
       const balance = await minToken.balanceOf(deployer.address);
-      expect(balance).to.equal(300_000_000n * 10n ** 18n);
+      expect(balance).to.equal(35_000_000n * 10n ** 18n);
     });
   });
 
@@ -113,7 +113,6 @@ describe('DeploymentTests', async function () {
 
       describe('MIN En garanti deployment for marka beneficiaries', async function () {
         this.beforeAll('En garanti contract should be deployed', async function () {
-          console.log('Deploying MIN En garanti contract');
           minEnGaranti = await new MINStrategicSale__factory(deployer).deploy(minTokenAddress,
             {
               tgePermille: VESTING_SCHEDULES.team.tgePermille,
@@ -134,6 +133,7 @@ describe('DeploymentTests', async function () {
             await minToken.connect(deployer).transfer(minEnGarantiAddress, BigInt(amount));
             await minEnGaranti.addBeneficiary(beneficiary.address, BigInt(amount));
           }
+          
         });
 
         it('should pass all tests', async function () {
@@ -148,7 +148,7 @@ describe('DeploymentTests', async function () {
           await time.increase(1);
           await printBlockchainTime();
           publicReleasable = await minVesting.computeReleasableAmount(VESTING_SCHEDULES.public.beneficiary);
-          console.log('Public releasable:',publicReleasable.toString());
+          console.log('Public releasable:',publicReleasable);
         });
       });
     });
