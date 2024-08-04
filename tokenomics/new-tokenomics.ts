@@ -1,6 +1,5 @@
 import tokenomics from './json/new-tokenomics.json';
-import TEAM_BENEFICIARIES from '../beneficiaries/marka.json'; //TODO: Place the correct files here for the beneficiaries 
-import STRATEGIC_BENEFICIARIES from '../beneficiaries/marka-disi-ortak-adresli.json'; //TODO: Place the correct files here for the beneficiaries
+import ALL_BENEFICIARIES from '../beneficiaries/total_sales.json'; //TODO: Place the correct files here for the beneficiaries 
 
 const convertNumberToBigInt = (number:number) =>{
   const split = number.toString().split('.');
@@ -18,18 +17,17 @@ const convertNumberToBigInt = (number:number) =>{
 
 const MONTH = 60 * 60 * 24 * 30;
 
-const START_DATE = Math.floor(new Date('Aug 1 2024 00:00:00 GMT+0300').getTime() / 1000);
+const START_DATE = Math.floor(new Date('Aug 6 2024 13:00:00 UTC').getTime() / 1000);
+
+const START_DATE_REST = Math.floor(new Date('Aug 3 2024 13:00:00 UTC').getTime() / 1000);
 
 const WALLETS = {
-strategic: '0x414b466dBc4484F4b7463161dbaaB50c8Db0db1d',
-  private: '0xf6479F6615A41Ab92493B037174D6A7F01413d3C',
-  public: '0x4701ddB84fB1CF21d94c738D59bDe941a8E27103',
-  enGaranti: '0x23fef38422BcC0D5EEb3E6AE82C6084a32ea73b0',
-  operations: '0x6E75b04c42F9cCF8E433860BEF02F6b2FEF32314',
-  marketingAndRewards: '0xb040c794CD320f6443FF7651FC8808f8A71FF38c',
-  devTeam: '0xc1CA44D79032C22d0dC5DA630ba83091F738e2DC',
-  reserve: '0x737c7A712fb0364FC69bdd0e510dD6FfD629d344',
-  liquidity: '0x1FF580c899a579F7a013E94D3B3a034eC5Bf01B7',
+  public: '0x5A70d191CeA54EE4e82719Cb61a566e1b8A2C881',
+  operations: '0xbDb10e6eac81634d6f929eC44C6CE82Fc96f7845',
+  marketingAndRewards: '0xC566CB3E7a7b8ea07B93B27E3ba0Af92eae2dc3C',
+  devTeam: '0x3673D641641D1d87761CBb2B5aa11249F5327BD3',
+  reserve: '0xBfcBc0665dB6cF1ce11b55F7c46656B5ed57E9B2',
+  liquidity: '0xb2a14d93761E647afba4e0600d16f9FF9A12563e',
 };
 
 const VESTING_SCHEDULES = {
@@ -37,7 +35,7 @@ const VESTING_SCHEDULES = {
   public: {
     tgePermille: tokenomics.public.tge * 10,
     beneficiary: WALLETS.public,
-    startTimestamp: START_DATE,
+    startTimestamp: START_DATE_REST,
     cliffDuration:  tokenomics.public.cliff * MONTH,
     vestingDuration: tokenomics.public.vesting * MONTH,
     slicePeriodSeconds: MONTH,
@@ -47,7 +45,7 @@ const VESTING_SCHEDULES = {
   operations: {
     tgePermille: tokenomics.operations.tge * 10,
     beneficiary: WALLETS.operations,
-    startTimestamp: START_DATE,
+    startTimestamp: START_DATE_REST,
     cliffDuration: tokenomics.operations.cliff * MONTH,
     vestingDuration: tokenomics.operations.vesting * MONTH,
     slicePeriodSeconds: MONTH,
@@ -58,7 +56,7 @@ const VESTING_SCHEDULES = {
   marketingAndRewards: {
     tgePermille: tokenomics.marketing.tge * 10,
     beneficiary: WALLETS.marketingAndRewards,
-    startTimestamp: START_DATE,
+    startTimestamp: START_DATE_REST,
     cliffDuration: tokenomics.marketing.cliff * MONTH,
     vestingDuration: tokenomics.marketing.vesting * MONTH,
     slicePeriodSeconds: MONTH,
@@ -69,7 +67,7 @@ const VESTING_SCHEDULES = {
   devTeam: {
     tgePermille: tokenomics.devTeam.tge * 10,
     beneficiary: WALLETS.devTeam,
-    startTimestamp: START_DATE,
+    startTimestamp: START_DATE_REST,
     cliffDuration: tokenomics.devTeam.cliff * MONTH,
     vestingDuration: tokenomics.devTeam.vesting * MONTH,
     slicePeriodSeconds: MONTH,
@@ -80,7 +78,7 @@ const VESTING_SCHEDULES = {
   reserve: {
     tgePermille: tokenomics.reserve.tge * 10,
     beneficiary: WALLETS.reserve,
-    startTimestamp: START_DATE,
+    startTimestamp: START_DATE_REST,
     cliffDuration: tokenomics.reserve.cliff * MONTH,
     vestingDuration: tokenomics.reserve.vesting * MONTH,
     slicePeriodSeconds: MONTH,
@@ -91,7 +89,7 @@ const VESTING_SCHEDULES = {
   liquidity: {
     tgePermille: tokenomics.liquidity.tge * 10,
     beneficiary: WALLETS.liquidity,
-    startTimestamp: START_DATE,
+    startTimestamp: START_DATE_REST,
     cliffDuration: tokenomics.liquidity.cliff * MONTH,
     vestingDuration: tokenomics.liquidity.vesting * MONTH,
     slicePeriodSeconds: MONTH,
@@ -101,7 +99,7 @@ const VESTING_SCHEDULES = {
   
   strategic: {
     tgePermille: tokenomics.strategic.tge * 10,
-    beneficiary: WALLETS.liquidity,
+    beneficiary: "",
     startTimestamp: START_DATE,
     cliffDuration: tokenomics.strategic.cliff * MONTH,
     vestingDuration: tokenomics.strategic.vesting * MONTH,
@@ -110,16 +108,16 @@ const VESTING_SCHEDULES = {
     releasedAmount: 0,
   },
   
-  team: {
-    tgePermille: tokenomics.team.tge * 10,
-    beneficiary: WALLETS.liquidity,
+  ecosystem: {
+    tgePermille: tokenomics.ecosystem.tge * 10,
+    beneficiary: "",
     startTimestamp: START_DATE,
-    cliffDuration: tokenomics.team.cliff* MONTH,
-    vestingDuration: tokenomics.team.vesting * MONTH,
+    cliffDuration: tokenomics.ecosystem.cliff* MONTH,
+    vestingDuration: tokenomics.ecosystem.vesting * MONTH,
     slicePeriodSeconds: MONTH,
-    totalAmount: convertNumberToBigInt(tokenomics.team.amount),
+    totalAmount: convertNumberToBigInt(tokenomics.ecosystem.amount),
     releasedAmount: 0,
   },
 
 };
-export {WALLETS, VESTING_SCHEDULES,TEAM_BENEFICIARIES,STRATEGIC_BENEFICIARIES};
+export {WALLETS, VESTING_SCHEDULES,ALL_BENEFICIARIES};

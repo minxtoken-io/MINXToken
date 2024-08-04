@@ -4,9 +4,10 @@ import {expect} from 'chai';
 import {ethers, network} from 'hardhat';
 import {MINStrategicSale, MINToken, MINToken__factory, MINVesting, MINVesting__factory,MINStrategicSale__factory} from '../typechain';
 import {SignerWithAddress} from '@nomicfoundation/hardhat-ethers/signers';
-import {VESTING_SCHEDULES, TEAM_BENEFICIARIES, STRATEGIC_BENEFICIARIES} from '../tokenomics/new-tokenomics';
+import {VESTING_SCHEDULES, ALL_BENEFICIARIES} from '../tokenomics/new-tokenomics';
 import {vesting} from '../typechain/contracts';
 import {Decimal} from 'decimal.js';
+
 let deployer: SignerWithAddress;
 let minToken: MINToken;
 let minTokenAddress: string;
@@ -14,9 +15,6 @@ let minVesting: MINVesting;
 let minVestingAddress: string;
 let minStrategic: MINStrategicSale;
 let minStrategicAddress: string;
-
-let minEnGaranti: MINStrategicSale;
-let minEnGarantiAddress: string;
 
 const impersonate = async (address: string) => {
   await network.provider.request({
@@ -101,56 +99,20 @@ describe('DeploymentTests', async function () {
           }
         );
         minStrategicAddress = await minStrategic.getAddress();
-        for (const beneficiary of STRATEGIC_BENEFICIARIES) {
+        for (const beneficiary of ALL_BENEFICIARIES) {
           const decimalAmount = new Decimal(beneficiary.tokens);
           const multiplier = new Decimal(10).pow(18);
           const amount =  decimalAmount.mul(multiplier).toFixed();
           await minToken.connect(deployer).transfer(minStrategicAddress, BigInt(amount));
           await minStrategic.addBeneficiary(beneficiary.address, BigInt(amount));
         }
-
       });
 
-      describe('MIN En garanti deployment for marka beneficiaries', async function () {
-        this.beforeAll('En garanti contract should be deployed', async function () {
-          minEnGaranti = await new MINStrategicSale__factory(deployer).deploy(minTokenAddress,
-            {
-              tgePermille: VESTING_SCHEDULES.team.tgePermille,
-              beneficiary: '0x0000000000000000000000000000000000000000',
-              cliffDuration: VESTING_SCHEDULES.team.cliffDuration,
-              slicePeriodSeconds: VESTING_SCHEDULES.team.slicePeriodSeconds,
-              startTimestamp: VESTING_SCHEDULES.team.startTimestamp,
-              totalAmount: VESTING_SCHEDULES.team.totalAmount,
-              vestingDuration: VESTING_SCHEDULES.team.vestingDuration,
-              releasedAmount: VESTING_SCHEDULES.team.releasedAmount,
-            }
-          );
-          minEnGarantiAddress = await minEnGaranti.getAddress();
-          for (const beneficiary of TEAM_BENEFICIARIES) {
-            const decimalAmount = new Decimal(beneficiary.tokens);
-            const multiplier = new Decimal(10).pow(18);
-            const amount =  decimalAmount.mul(multiplier).toFixed();
-            await minToken.connect(deployer).transfer(minEnGarantiAddress, BigInt(amount));
-            await minEnGaranti.addBeneficiary(beneficiary.address, BigInt(amount));
-          }
-          
-        });
-
-        it('should pass all tests', async function () {
-          const publicBeneficiary= await impersonate(VESTING_SCHEDULES.public.beneficiary);
-          let publicReleasable = await minVesting.computeReleasableAmount(VESTING_SCHEDULES.public.beneficiary);
-          await printBlockchainTime();
-          console.log('Public releasable:',publicReleasable.toString());
-          await time.increaseTo(Math.floor(new Date('Jul 31 2024 23:59:59').getTime() / 1000));
-          await printBlockchainTime();
-          publicReleasable = await minVesting.computeReleasableAmount(VESTING_SCHEDULES.public.beneficiary);
-          console.log('Public releasable:',publicReleasable.toString());
-          await time.increase(1);
-          await printBlockchainTime();
-          publicReleasable = await minVesting.computeReleasableAmount(VESTING_SCHEDULES.public.beneficiary);
-          console.log('Public releasable:',publicReleasable);
-        });
+      it('deployer should have zero balance', async function () {
+        const balance = await minToken.balanceOf(deployer.address);
+        expect(balance).to.equal(0n);
       });
+
     });
   });
 });
