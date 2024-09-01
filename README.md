@@ -1,3 +1,7 @@
+# ⚠️ Repository Moved (Sep 1, 2024)
+
+As of September 1st, 2024, this project has been moved to and will be maintained at the [MINXToken](https://github.com/ModernInnovationNetwork/MINXToken) repository under the [Modern Innovation Network](https://github.com/ModernInnovationNetwork) organization.
+
 # MIN Token Project
 
 MIN Token project is an ERC20 based vesting project.
